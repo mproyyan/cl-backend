@@ -17,9 +17,9 @@ func NewHandler(outfits []models.Outfit) *Handler {
 	return &Handler{Outfits: outfits}
 }
 
-func (h *Handler) Recommend(c *fiber.Ctx) error {
+func (h *Handler) Recommend(c fiber.Ctx) error {
 	var req models.RecommendRequest
-	if err := c.BodyParser(&req); err != nil {
+	if err := c.Bind().Body(&req); err != nil {
 		return c.Status(400).JSON(fiber.Map{"error": "malformed JSON body"})
 	}
 
@@ -45,12 +45,12 @@ func (h *Handler) Recommend(c *fiber.Ctx) error {
 	return c.JSON(resp)
 }
 
-func (h *Handler) GetOutfits(c *fiber.Ctx) error {
+func (h *Handler) GetOutfits(c fiber.Ctx) error {
 	gender := c.Query("gender")
 	filtered := scoring.FilterByGender(h.Outfits, gender)
 	return c.JSON(filtered)
 }
 
-func (h *Handler) Health(c *fiber.Ctx) error {
+func (h *Handler) Health(c fiber.Ctx) error {
 	return c.JSON(fiber.Map{"status": "ok", "service": "outfit-recommender"})
 }
