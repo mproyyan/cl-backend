@@ -1,3 +1,578 @@
 {
-  "outfits": []
+  "outfits": [
+    {
+      "id": "olive-cafe-layers",
+      "name": "olive cafe layers",
+      "gender": "male",
+      "style_tag": "casual",
+      "harmony_tag": "earthy",
+      "undertone": "warm",
+      "contrast_level": "low",
+      "environments": [
+        "outdoor",
+        "indoor"
+      ],
+      "weather_support": [
+        "cloudy",
+        "sunny"
+      ],
+      "items": {
+        "top": {
+          "name": "flannel",
+          "color": "cream",
+          "hex": "#F2E7D2"
+        },
+        "bottom": {
+          "name": "chinos",
+          "color": "tan",
+          "hex": "#C9AE88"
+        },
+        "outer": {
+          "name": "cardigan",
+          "color": "olive green",
+          "hex": "#5A6E34"
+        },
+        "shoes": {
+          "name": "boots",
+          "color": "brown",
+          "hex": "#7E603F"
+        }
+      }
+    },
+    {
+      "id": "midnight-slate-uniform",
+      "name": "midnight slate uniform",
+      "gender": "male",
+      "style_tag": "minimalist",
+      "harmony_tag": "cool",
+      "undertone": "cool",
+      "contrast_level": "medium",
+      "environments": [
+        "indoor"
+      ],
+      "weather_support": [
+        "night",
+        "cloudy"
+      ],
+      "items": {
+        "top": {
+          "name": "turtleneck",
+          "color": "slate blue",
+          "hex": "#556885"
+        },
+        "bottom": {
+          "name": "tailored pants",
+          "color": "charcoal",
+          "hex": "#444444"
+        },
+        "outer": {
+          "name": "wool coat",
+          "color": "navy blue",
+          "hex": "#223566"
+        },
+        "shoes": {
+          "name": "chelsea boots",
+          "color": "black",
+          "hex": "#171717"
+        }
+      }
+    },
+    {
+      "id": "charcoal-rain-runner",
+      "name": "charcoal rain runner",
+      "gender": "male",
+      "style_tag": "streetwear",
+      "harmony_tag": "dark",
+      "undertone": "neutral",
+      "contrast_level": "high",
+      "environments": [
+        "outdoor"
+      ],
+      "weather_support": [
+        "rainy",
+        "night"
+      ],
+      "items": {
+        "top": {
+          "name": "oversized tee",
+          "color": "charcoal",
+          "hex": "#4B4B4B"
+        },
+        "bottom": {
+          "name": "cargo pants",
+          "color": "black",
+          "hex": "#141414"
+        },
+        "outer": {
+          "name": "windbreaker",
+          "color": "forest green",
+          "hex": "#2F4A2F"
+        },
+        "shoes": {
+          "name": "platform sneakers",
+          "color": "gray",
+          "hex": "#999999"
+        }
+      }
+    },
+    {
+      "id": "camel-office-edit",
+      "name": "camel office edit",
+      "gender": "male",
+      "style_tag": "smart_casual",
+      "harmony_tag": "analogous",
+      "undertone": "warm",
+      "contrast_level": "medium",
+      "environments": [
+        "indoor",
+        "outdoor"
+      ],
+      "weather_support": [
+        "sunny",
+        "cloudy"
+      ],
+      "items": {
+        "top": {
+          "name": "button-down",
+          "color": "cream",
+          "hex": "#F1E2CB"
+        },
+        "bottom": {
+          "name": "trousers",
+          "color": "camel",
+          "hex": "#BE985F"
+        },
+        "outer": {
+          "name": "blazer",
+          "color": "brown",
+          "hex": "#826443"
+        },
+        "shoes": {
+          "name": "loafers",
+          "color": "dark brown",
+          "hex": "#432B1C"
+        }
+      }
+    },
+    {
+      "id": "wine-evening-tailor",
+      "name": "wine evening tailor",
+      "gender": "male",
+      "style_tag": "formal",
+      "harmony_tag": "complementary",
+      "undertone": "neutral",
+      "contrast_level": "high",
+      "environments": [
+        "indoor"
+      ],
+      "weather_support": [
+        "night"
+      ],
+      "items": {
+        "top": {
+          "name": "shirt",
+          "color": "off-white",
+          "hex": "#F1F1F1"
+        },
+        "bottom": {
+          "name": "tailored pants",
+          "color": "navy blue",
+          "hex": "#233667"
+        },
+        "outer": {
+          "name": "overcoat",
+          "color": "wine",
+          "hex": "#531B2A"
+        },
+        "shoes": {
+          "name": "oxfords",
+          "color": "black",
+          "hex": "#151515"
+        }
+      }
+    },
+    {
+      "id": "lavender-soft-motion",
+      "name": "lavender soft motion",
+      "gender": "female",
+      "style_tag": "minimalist",
+      "harmony_tag": "light",
+      "undertone": "cool",
+      "contrast_level": "low",
+      "environments": [
+        "indoor"
+      ],
+      "weather_support": [
+        "sunny",
+        "cloudy"
+      ],
+      "items": {
+        "top": {
+          "name": "blouse",
+          "color": "lavender",
+          "hex": "#BCB0CB"
+        },
+        "bottom": {
+          "name": "wide-leg pants",
+          "color": "off-white",
+          "hex": "#F2F2F2"
+        },
+        "outer": {
+          "name": "cardigan",
+          "color": "blush",
+          "hex": "#E7B9B1"
+        },
+        "shoes": {
+          "name": "mules",
+          "color": "cream",
+          "hex": "#F3E7D3"
+        }
+      }
+    },
+    {
+      "id": "dusty-rose-stride",
+      "name": "dusty rose stride",
+      "gender": "female",
+      "style_tag": "casual",
+      "harmony_tag": "warm",
+      "undertone": "warm",
+      "contrast_level": "medium",
+      "environments": [
+        "outdoor",
+        "indoor"
+      ],
+      "weather_support": [
+        "sunny"
+      ],
+      "items": {
+        "top": {
+          "name": "tee",
+          "color": "dusty rose",
+          "hex": "#CF8E93"
+        },
+        "bottom": {
+          "name": "jeans",
+          "color": "brown",
+          "hex": "#806242"
+        },
+        "outer": {
+          "name": "denim jacket",
+          "color": "rust",
+          "hex": "#A95C36"
+        },
+        "shoes": {
+          "name": "ankle boots",
+          "color": "camel",
+          "hex": "#C29B63"
+        }
+      }
+    },
+    {
+      "id": "plum-night-structure",
+      "name": "plum night structure",
+      "gender": "female",
+      "style_tag": "formal",
+      "harmony_tag": "monochromatic",
+      "undertone": "cool",
+      "contrast_level": "low",
+      "environments": [
+        "indoor"
+      ],
+      "weather_support": [
+        "night"
+      ],
+      "items": {
+        "top": {
+          "name": "blouse",
+          "color": "dusty purple",
+          "hex": "#847A95"
+        },
+        "bottom": {
+          "name": "midi skirt",
+          "color": "plum",
+          "hex": "#523452"
+        },
+        "outer": {
+          "name": "trench coat",
+          "color": "mauve",
+          "hex": "#A67A89"
+        },
+        "shoes": {
+          "name": "ankle boots",
+          "color": "dusty purple",
+          "hex": "#7D708D"
+        }
+      }
+    },
+    {
+      "id": "sage-weekend-flow",
+      "name": "sage weekend flow",
+      "gender": "female",
+      "style_tag": "streetwear",
+      "harmony_tag": "earthy",
+      "undertone": "neutral",
+      "contrast_level": "medium",
+      "environments": [
+        "outdoor"
+      ],
+      "weather_support": [
+        "cloudy",
+        "rainy"
+      ],
+      "items": {
+        "top": {
+          "name": "crop top",
+          "color": "sage",
+          "hex": "#839476"
+        },
+        "bottom": {
+          "name": "joggers",
+          "color": "army green",
+          "hex": "#536344"
+        },
+        "outer": {
+          "name": "hoodie",
+          "color": "olive green",
+          "hex": "#5B6F34"
+        },
+        "shoes": {
+          "name": "sneakers",
+          "color": "beige",
+          "hex": "#D7C2A5"
+        }
+      }
+    },
+    {
+      "id": "cream-city-balance",
+      "name": "cream city balance",
+      "gender": "female",
+      "style_tag": "smart_casual",
+      "harmony_tag": "neutral",
+      "undertone": "neutral",
+      "contrast_level": "high",
+      "environments": [
+        "indoor",
+        "outdoor"
+      ],
+      "weather_support": [
+        "sunny",
+        "night"
+      ],
+      "items": {
+        "top": {
+          "name": "knit",
+          "color": "cream",
+          "hex": "#F0E0C9"
+        },
+        "bottom": {
+          "name": "tailored pants",
+          "color": "charcoal",
+          "hex": "#484848"
+        },
+        "outer": {
+          "name": "blazer",
+          "color": "light gray",
+          "hex": "#D1D1D1"
+        },
+        "shoes": {
+          "name": "loafers",
+          "color": "black",
+          "hex": "#181818"
+        }
+      }
+    },
+    {
+      "id": "denim-shadow-combo",
+      "name": "denim shadow combo",
+      "gender": "unisex",
+      "style_tag": "streetwear",
+      "harmony_tag": "cool",
+      "undertone": "cool",
+      "contrast_level": "high",
+      "environments": [
+        "outdoor",
+        "indoor"
+      ],
+      "weather_support": [
+        "night",
+        "rainy"
+      ],
+      "items": {
+        "top": {
+          "name": "oversized tee",
+          "color": "steel blue",
+          "hex": "#536C8B"
+        },
+        "bottom": {
+          "name": "cargo pants",
+          "color": "charcoal",
+          "hex": "#3F3F3F"
+        },
+        "outer": {
+          "name": "bomber jacket",
+          "color": "denim blue",
+          "hex": "#425883"
+        },
+        "shoes": {
+          "name": "sneakers",
+          "color": "black",
+          "hex": "#121212"
+        }
+      }
+    },
+    {
+      "id": "sandstone-day-form",
+      "name": "sandstone day form",
+      "gender": "unisex",
+      "style_tag": "formal",
+      "harmony_tag": "light",
+      "undertone": "warm",
+      "contrast_level": "low",
+      "environments": [
+        "indoor"
+      ],
+      "weather_support": [
+        "sunny",
+        "cloudy"
+      ],
+      "items": {
+        "top": {
+          "name": "shirt",
+          "color": "off-white",
+          "hex": "#F3F3F3"
+        },
+        "bottom": {
+          "name": "trousers",
+          "color": "beige",
+          "hex": "#D9C4A8"
+        },
+        "outer": {
+          "name": "trench coat",
+          "color": "cream",
+          "hex": "#F2E6D2"
+        },
+        "shoes": {
+          "name": "derby shoes",
+          "color": "tan",
+          "hex": "#C9AD86"
+        }
+      }
+    },
+    {
+      "id": "forest-commute-core",
+      "name": "forest commute core",
+      "gender": "unisex",
+      "style_tag": "smart_casual",
+      "harmony_tag": "analogous",
+      "undertone": "warm",
+      "contrast_level": "medium",
+      "environments": [
+        "outdoor"
+      ],
+      "weather_support": [
+        "cloudy",
+        "rainy"
+      ],
+      "items": {
+        "top": {
+          "name": "polo",
+          "color": "sage",
+          "hex": "#859779"
+        },
+        "bottom": {
+          "name": "chinos",
+          "color": "brown",
+          "hex": "#7F623F"
+        },
+        "outer": {
+          "name": "leather jacket",
+          "color": "forest green",
+          "hex": "#355235"
+        },
+        "shoes": {
+          "name": "boots",
+          "color": "dark brown",
+          "hex": "#452C1E"
+        }
+      }
+    },
+    {
+      "id": "graphite-line-fit",
+      "name": "graphite line fit",
+      "gender": "unisex",
+      "style_tag": "minimalist",
+      "harmony_tag": "monochromatic",
+      "undertone": "neutral",
+      "contrast_level": "high",
+      "environments": [
+        "indoor",
+        "outdoor"
+      ],
+      "weather_support": [
+        "night",
+        "cloudy"
+      ],
+      "items": {
+        "top": {
+          "name": "sweater",
+          "color": "gray",
+          "hex": "#999999"
+        },
+        "bottom": {
+          "name": "tailored pants",
+          "color": "charcoal",
+          "hex": "#424242"
+        },
+        "outer": {
+          "name": "overcoat",
+          "color": "black",
+          "hex": "#161616"
+        },
+        "shoes": {
+          "name": "chelsea boots",
+          "color": "charcoal",
+          "hex": "#4E4E4E"
+        }
+      }
+    },
+    {
+      "id": "mustard-evening-drift",
+      "name": "mustard evening drift",
+      "gender": "unisex",
+      "style_tag": "casual",
+      "harmony_tag": "complementary",
+      "undertone": "warm",
+      "contrast_level": "high",
+      "environments": [
+        "outdoor",
+        "indoor"
+      ],
+      "weather_support": [
+        "night",
+        "sunny"
+      ],
+      "items": {
+        "top": {
+          "name": "tee",
+          "color": "mustard",
+          "hex": "#BE9838"
+        },
+        "bottom": {
+          "name": "jeans",
+          "color": "navy blue",
+          "hex": "#243869"
+        },
+        "outer": {
+          "name": "puffer jacket",
+          "color": "rust",
+          "hex": "#AB5D38"
+        },
+        "shoes": {
+          "name": "sneakers",
+          "color": "off-white",
+          "hex": "#EFEFEF"
+        }
+      }
+    }
+  ]
 }
