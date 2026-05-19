@@ -1,3 +1,7 @@
-module github.com/mproyyan/outfit-recommendation
+module outfit-recommender
 
-go 1.25.0
+go 1.25
+
+require (
+	github.com/gofiber/fiber/v2 v2.52.5
+)
