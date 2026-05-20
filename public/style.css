@@ -1,0 +1,150 @@
+* {
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f5f5f5;
+    padding: 40px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.input-card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.input-card h2 {
+    margin-top: 0;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 18px;
+    border: none;
+    border-radius: 16px;
+    background: black;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.color-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.color-box {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.color-box span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 10px;
+    padding: 4px;
+    text-align: center;
+}
+
+.results {
+    margin-top: 40px;
+}
+
+.result-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.outfit-items {
+    margin-top: 20px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.item-card {
+    width: 140px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    background: #fafafa;
+}
+
+.item-color {
+    height: 100px;
+}
+
+.item-info {
+    padding: 12px;
+}
+
+.item-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.item-hex {
+    font-size: 12px;
+    color: #777;
+}
+
+.gender-section {
+    margin-top: 20px;
+}
+
+.preset-section {
+    margin-top: 20px;
+}

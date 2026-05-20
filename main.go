@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
+	"github.com/gofiber/fiber/v3/middleware/static"
 
 	"outfit-recommender/handlers"
 	"outfit-recommender/loader"
@@ -23,6 +24,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to load outfits: %v", err)
 	}
+
 	log.Printf("Loaded %d outfits from %s", len(outfits), path)
 
 	h := handlers.NewHandler(outfits)
@@ -34,11 +36,15 @@ func main() {
 	})
 
 	app.Use(logger.New())
+
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{"GET", "POST", "OPTIONS"},
 		AllowHeaders: []string{"Content-Type"},
 	}))
+
+	// STATIC FILES
+	app.Get("/*", static.New("./public"))
 
 	app.Get("/health", h.Health)
 	app.Get("/api/v1/outfits", h.GetOutfits)
@@ -48,6 +54,7 @@ func main() {
 	if port == "" {
 		port = "3000"
 	}
+
 	log.Printf("Outfit Recommender API running on :%s", port)
 	log.Fatal(app.Listen(":" + port))
 }

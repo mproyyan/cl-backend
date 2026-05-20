@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outfit Recommender</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Outfit Recommender</h1>
+
+        <div class="preset-section">
+            <label>Quick Preset</label>
+
+            <select id="presetSelect">
+                <option value="">Select Personal Color Type</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+
+            <div class="input-card">
+                <h2>Best Colors</h2>
+
+                <input type="text" id="bestInput" placeholder="#FFFFFF" />
+
+                <div id="bestColors" class="color-list"></div>
+            </div>
+
+            <div class="input-card">
+                <h2>Avoid Colors</h2>
+
+                <input type="text" id="avoidInput" placeholder="#000000" />
+
+                <div id="avoidColors" class="color-list"></div>
+            </div>
+
+        </div>
+
+        <div class="gender-section">
+            <label>Gender</label>
+
+            <select id="gender">
+                <option value="">All</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="unisex">Unisex</option>
+            </select>
+        </div>
+
+        <button id="recommendBtn">
+            Recommend Me
+        </button>
+
+        <div id="results" class="results"></div>
+
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>
