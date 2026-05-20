@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/gofiber/fiber/v3"
+	"go.mongodb.org/mongo-driver/mongo"
 	"outfit-recommender/handlers"
 	"outfit-recommender/models"
 )
@@ -19,6 +20,40 @@ type MockOutfitRepository struct {
 
 func (m *MockOutfitRepository) GetAll(ctx context.Context) ([]models.Outfit, error) {
 	return m.Outfits, nil
+}
+
+func (m *MockOutfitRepository) GetByID(ctx context.Context, id string) (*models.Outfit, error) {
+	for _, o := range m.Outfits {
+		if o.ID == id {
+			return &o, nil
+		}
+	}
+	return nil, mongo.ErrNoDocuments
+}
+
+func (m *MockOutfitRepository) Create(ctx context.Context, outfit *models.Outfit) error {
+	m.Outfits = append(m.Outfits, *outfit)
+	return nil
+}
+
+func (m *MockOutfitRepository) Update(ctx context.Context, id string, outfit *models.Outfit) error {
+	for i, o := range m.Outfits {
+		if o.ID == id {
+			m.Outfits[i] = *outfit
+			return nil
+		}
+	}
+	return mongo.ErrNoDocuments
+}
+
+func (m *MockOutfitRepository) Delete(ctx context.Context, id string) error {
+	for i, o := range m.Outfits {
+		if o.ID == id {
+			m.Outfits = append(m.Outfits[:i], m.Outfits[i+1:]...)
+			return nil
+		}
+	}
+	return mongo.ErrNoDocuments
 }
 
 func TestRecommend(t *testing.T) {
@@ -139,5 +174,85 @@ func TestGetOutfits(t *testing.T) {
 	}
 	if resOutfits[0].ID != "1" {
 		t.Errorf("Expected ID 1, got %s", resOutfits[0].ID)
+	}
+}
+
+func TestOutfitCRUD(t *testing.T) {
+	app := fiber.New()
+	outfits := []models.Outfit{
+		{ID: "1", Name: "Casual Summer", Gender: "male"},
+	}
+	repo := &MockOutfitRepository{Outfits: outfits}
+	h := handlers.NewHandler(repo)
+
+	app.Get("/api/v1/outfits/:id", h.GetOutfit)
+	app.Post("/api/v1/outfits", h.CreateOutfit)
+	app.Put("/api/v1/outfits/:id", h.UpdateOutfit)
+	app.Delete("/api/v1/outfits/:id", h.DeleteOutfit)
+
+	// 1. Get existing outfit
+	req := httptest.NewRequest("GET", "/api/v1/outfits/1", nil)
+	resp, _ := app.Test(req)
+	if resp.StatusCode != 200 {
+		t.Errorf("Expected GetOutfit 200, got %d", resp.StatusCode)
+	}
+
+	// 2. Get non-existing outfit
+	req = httptest.NewRequest("GET", "/api/v1/outfits/999", nil)
+	resp, _ = app.Test(req)
+	if resp.StatusCode != 404 {
+		t.Errorf("Expected GetOutfit 404, got %d", resp.StatusCode)
+	}
+
+	// 3. Create outfit
+	newOutfit := models.Outfit{
+		ID:     "2",
+		Name:   "Winter Cozy",
+		Gender: "female",
+	}
+	body, _ := json.Marshal(newOutfit)
+	req = httptest.NewRequest("POST", "/api/v1/outfits", bytes.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	resp, _ = app.Test(req)
+	if resp.StatusCode != 201 {
+		t.Errorf("Expected CreateOutfit 201, got %d", resp.StatusCode)
+	}
+
+	// 4. Update outfit
+	updatedOutfit := models.Outfit{
+		ID:     "1",
+		Name:   "Casual Summer Updated",
+		Gender: "unisex",
+	}
+	body, _ = json.Marshal(updatedOutfit)
+	req = httptest.NewRequest("PUT", "/api/v1/outfits/1", bytes.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	resp, _ = app.Test(req)
+	if resp.StatusCode != 200 {
+		t.Errorf("Expected UpdateOutfit 200, got %d", resp.StatusCode)
+	}
+
+	// Verify update
+	req = httptest.NewRequest("GET", "/api/v1/outfits/1", nil)
+	resp, _ = app.Test(req)
+	var gotOutfit models.Outfit
+	respBody, _ := io.ReadAll(resp.Body)
+	json.Unmarshal(respBody, &gotOutfit)
+	if gotOutfit.Name != "Casual Summer Updated" {
+		t.Errorf("Expected updated name 'Casual Summer Updated', got %s", gotOutfit.Name)
+	}
+
+	// 5. Delete outfit
+	req = httptest.NewRequest("DELETE", "/api/v1/outfits/1", nil)
+	resp, _ = app.Test(req)
+	if resp.StatusCode != 200 {
+		t.Errorf("Expected DeleteOutfit 200, got %d", resp.StatusCode)
+	}
+
+	// Verify delete
+	req = httptest.NewRequest("GET", "/api/v1/outfits/1", nil)
+	resp, _ = app.Test(req)
+	if resp.StatusCode != 404 {
+		t.Errorf("Expected GetOutfit 404 after delete, got %d", resp.StatusCode)
 	}
 }

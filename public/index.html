@@ -4,65 +4,106 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Outfit Recommender</title>
-
+    <title>Wardrobe & Outfit Recommender</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style -->
     <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-
-    <div class="container">
-
-        <h1>Outfit Recommender</h1>
-
-        <div class="preset-section">
-            <label>Quick Preset</label>
-
-            <select id="presetSelect">
-                <option value="">Select Personal Color Type</option>
-            </select>
-        </div>
-
-        <div class="form-row">
-
-            <div class="input-card">
-                <h2>Best Colors</h2>
-
-                <input type="text" id="bestInput" placeholder="#FFFFFF" />
-
-                <div id="bestColors" class="color-list"></div>
+    <!-- Premium Glassmorphism Navbar -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">FitRecommend</span>
             </div>
+            <nav class="nav-tabs">
+                <a href="/" class="tab-btn active">
+                    <span class="tab-icon">🔮</span> Recommender
+                </a>
+                <a href="/outfits" class="tab-btn">
+                    <span class="tab-icon">👔</span> Wardrobe Manager
+                </a>
+            </nav>
+        </div>
+    </header>
 
-            <div class="input-card">
-                <h2>Avoid Colors</h2>
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- RECOMMENDATION VIEW -->
+            <section id="recommendView" class="view-panel active">
+                <div class="view-header">
+                    <h1>Personalized Recommendations</h1>
+                    <p class="subtitle">Enter your colors or select a preset to match with the best items in your wardrobe</p>
+                </div>
 
-                <input type="text" id="avoidInput" placeholder="#000000" />
+                <div class="preset-section card">
+                    <div class="section-title-row">
+                        <span class="sec-icon">🎨</span>
+                        <label for="presetSelect">Quick Personal Color Preset</label>
+                    </div>
+                    <select id="presetSelect" class="custom-select">
+                        <option value="">Select Personal Color Type</option>
+                    </select>
+                </div>
 
-                <div id="avoidColors" class="color-list"></div>
-            </div>
+                <div class="form-row">
+                    <div class="input-card">
+                        <div class="card-header-accent best">
+                            <h2>Best Colors</h2>
+                            <p>Colors that highlight your natural undertones</p>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="text" id="bestInput" placeholder="Type hex (e.g. #FF6B6B) & press Enter" class="color-input" />
+                            <span class="input-color-preview" id="bestPreview"></span>
+                        </div>
+                        <div id="bestColors" class="color-list"></div>
+                    </div>
+
+                    <div class="input-card">
+                        <div class="card-header-accent avoid">
+                            <h2>Avoid Colors</h2>
+                            <p>Colors that might wash you out</p>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="text" id="avoidInput" placeholder="Type hex (e.g. #6B705C) & press Enter" class="color-input" />
+                            <span class="input-color-preview" id="avoidPreview"></span>
+                        </div>
+                        <div id="avoidColors" class="color-list"></div>
+                    </div>
+                </div>
+
+                <div class="gender-section card">
+                    <div class="section-title-row">
+                        <span class="sec-icon">👥</span>
+                        <label for="gender">Target Gender / Fit</label>
+                    </div>
+                    <select id="gender" class="custom-select">
+                        <option value="">All Genders</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="unisex">Unisex</option>
+                    </select>
+                </div>
+
+                <button id="recommendBtn" class="primary-btn">
+                    <span>Generate Matches</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+
+                <div id="results" class="results-container"></div>
+            </section>
 
         </div>
+    </main>
 
-        <div class="gender-section">
-            <label>Gender</label>
-
-            <select id="gender">
-                <option value="">All</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="unisex">Unisex</option>
-            </select>
-        </div>
-
-        <button id="recommendBtn">
-            Recommend Me
-        </button>
-
-        <div id="results" class="results"></div>
-
-    </div>
-
-    <script src="/app.js"></script>
+    <!-- Page Specific Script -->
+    <script src="/js/recommender.js"></script>
 </body>
 
 </html>

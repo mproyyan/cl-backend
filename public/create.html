@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Outfit - FitRecommend</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <!-- Premium Glassmorphism Navbar -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">FitRecommend</span>
+            </div>
+            <nav class="nav-tabs">
+                <a href="/" class="tab-btn">
+                    <span class="tab-icon">🔮</span> Recommender
+                </a>
+                <a href="/outfits" class="tab-btn active">
+                    <span class="tab-icon">👔</span> Wardrobe Manager
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container small-container">
+            
+            <div class="form-page-header">
+                <a href="/outfits" class="back-link">← Back to Wardrobe</a>
+                <h1>Create New Outfit</h1>
+                <p class="subtitle">Assemble a new outfit combinations and register its attributes</p>
+            </div>
+
+            <div class="card form-card-full">
+                <form id="outfitForm" class="page-form">
+                    <input type="hidden" id="formOutfitId" />
+                    
+                    <!-- SECTION 1: METADATA -->
+                    <div class="form-section">
+                        <h3>Outfit Information</h3>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="formName">Outfit Name <span class="required">*</span></label>
+                                <input type="text" id="formName" placeholder="e.g. Smart Casual Autumn" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="formGender">Gender Fit <span class="required">*</span></label>
+                                <select id="formGender" required>
+                                    <option value="unisex">Unisex</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="formStyleTag">Style Tag</label>
+                                <input type="text" id="formStyleTag" placeholder="e.g. Casual, Formal" />
+                            </div>
+                            <div class="form-group">
+                                <label for="formHarmonyTag">Harmony Tag</label>
+                                <input type="text" id="formHarmonyTag" placeholder="e.g. Complementary, Analogous" />
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="formUndertone">Undertone</label>
+                                <input type="text" id="formUndertone" placeholder="e.g. Warm, Cool, Neutral" />
+                            </div>
+                            <div class="form-group">
+                                <label for="formContrastLevel">Contrast Level</label>
+                                <input type="text" id="formContrastLevel" placeholder="e.g. High, Medium, Low" />
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="formEnvironments">Environments (comma separated)</label>
+                                <input type="text" id="formEnvironments" placeholder="e.g. office, outdoor, party" />
+                            </div>
+                            <div class="form-group">
+                                <label for="formWeatherSupport">Weather Support (comma separated)</label>
+                                <input type="text" id="formWeatherSupport" placeholder="e.g. sunny, windy, cold" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: OUTFIT ITEMS -->
+                    <div class="form-section">
+                        <h3>Clothing Items</h3>
+                        
+                        <!-- Top -->
+                        <div class="item-form-card">
+                            <h4>Top Wear</h4>
+                            <div class="item-fields-row">
+                                <div class="form-group flex-3">
+                                    <label for="formTopName">Item Name <span class="required">*</span></label>
+                                    <input type="text" id="formTopName" placeholder="e.g. Linen White Shirt" required />
+                                </div>
+                                <div class="form-group flex-2">
+                                    <label for="formTopColor">Color Name <span class="required">*</span></label>
+                                    <input type="text" id="formTopColor" placeholder="e.g. White" required />
+                                </div>
+                                <div class="form-group color-pick-group">
+                                    <label for="formTopHex">Hex <span class="required">*</span></label>
+                                    <div class="color-picker-wrapper">
+                                        <input type="color" id="formTopColorPicker" value="#ffffff" />
+                                        <input type="text" id="formTopHex" placeholder="#FFFFFF" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom -->
+                        <div class="item-form-card">
+                            <h4>Bottom Wear</h4>
+                            <div class="item-fields-row">
+                                <div class="form-group flex-3">
+                                    <label for="formBottomName">Item Name <span class="required">*</span></label>
+                                    <input type="text" id="formBottomName" placeholder="e.g. Navy Chino Pants" required />
+                                </div>
+                                <div class="form-group flex-2">
+                                    <label for="formBottomColor">Color Name <span class="required">*</span></label>
+                                    <input type="text" id="formBottomColor" placeholder="e.g. Navy" required />
+                                </div>
+                                <div class="form-group color-pick-group">
+                                    <label for="formBottomHex">Hex <span class="required">*</span></label>
+                                    <div class="color-picker-wrapper">
+                                        <input type="color" id="formBottomColorPicker" value="#000080" />
+                                        <input type="text" id="formBottomHex" placeholder="#000080" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Outer -->
+                        <div class="item-form-card">
+                            <h4>Outer Wear (Optional)</h4>
+                            <div class="item-fields-row">
+                                <div class="form-group flex-3">
+                                    <label for="formOuterName">Item Name</label>
+                                    <input type="text" id="formOuterName" placeholder="e.g. Brown Cardigan" />
+                                </div>
+                                <div class="form-group flex-2">
+                                    <label for="formOuterColor">Color Name</label>
+                                    <input type="text" id="formOuterColor" placeholder="e.g. Brown" />
+                                </div>
+                                <div class="form-group color-pick-group">
+                                    <label for="formOuterHex">Hex</label>
+                                    <div class="color-picker-wrapper">
+                                        <input type="color" id="formOuterColorPicker" value="#8b4513" />
+                                        <input type="text" id="formOuterHex" placeholder="#8B4513" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shoes -->
+                        <div class="item-form-card">
+                            <h4>Shoes</h4>
+                            <div class="item-fields-row">
+                                <div class="form-group flex-3">
+                                    <label for="formShoesName">Item Name <span class="required">*</span></label>
+                                    <input type="text" id="formShoesName" placeholder="e.g. Leather Loafers" required />
+                                </div>
+                                <div class="form-group flex-2">
+                                    <label for="formShoesColor">Color Name <span class="required">*</span></label>
+                                    <input type="text" id="formShoesColor" placeholder="e.g. Brown" required />
+                                </div>
+                                <div class="form-group color-pick-group">
+                                    <label for="formShoesHex">Hex <span class="required">*</span></label>
+                                    <div class="color-picker-wrapper">
+                                        <input type="color" id="formShoesColorPicker" value="#1a1a1a" />
+                                        <input type="text" id="formShoesHex" placeholder="#1A1A1A" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer-buttons">
+                        <a href="/outfits" class="secondary-btn decoration-none text-center">Cancel</a>
+                        <button type="submit" class="primary-btn shrink-w">Save Outfit</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Page Specific Script -->
+    <script src="/js/form.js"></script>
+</body>
+
+</html>

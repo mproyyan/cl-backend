@@ -44,15 +44,33 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"GET", "POST", "OPTIONS"},
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{"Content-Type"},
 	}))
+
+	// PAGE ENDPOINTS
+	app.Get("/", func(c fiber.Ctx) error {
+		return c.SendFile("./public/index.html")
+	})
+	app.Get("/outfits", func(c fiber.Ctx) error {
+		return c.SendFile("./public/outfits.html")
+	})
+	app.Get("/outfits/create", func(c fiber.Ctx) error {
+		return c.SendFile("./public/create.html")
+	})
+	app.Get("/outfits/edit", func(c fiber.Ctx) error {
+		return c.SendFile("./public/edit.html")
+	})
 
 	// STATIC FILES
 	app.Get("/*", static.New("./public"))
 
 	app.Get("/health", h.Health)
 	app.Get("/api/v1/outfits", h.GetOutfits)
+	app.Get("/api/v1/outfits/:id", h.GetOutfit)
+	app.Post("/api/v1/outfits", h.CreateOutfit)
+	app.Put("/api/v1/outfits/:id", h.UpdateOutfit)
+	app.Delete("/api/v1/outfits/:id", h.DeleteOutfit)
 	app.Post("/api/v1/recommend", h.Recommend)
 
 	port := os.Getenv("PORT")

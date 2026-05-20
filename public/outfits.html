@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wardrobe Manager - FitRecommend</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <!-- Premium Glassmorphism Navbar -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">FitRecommend</span>
+            </div>
+            <nav class="nav-tabs">
+                <a href="/" class="tab-btn">
+                    <span class="tab-icon">🔮</span> Recommender
+                </a>
+                <a href="/outfits" class="tab-btn active">
+                    <span class="tab-icon">👔</span> Wardrobe Manager
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- WARDROBE MANAGE VIEW -->
+            <section id="manageView" class="view-panel active">
+                <div class="view-header">
+                    <h1>Wardrobe Management</h1>
+                    <p class="subtitle">Create, view, update, and manage your custom outfits library</p>
+                </div>
+
+                <div class="toolbar card">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="searchOutfitInput" placeholder="Search outfit by name, style, or items..." />
+                    </div>
+                    <a href="/outfits/create" class="accent-btn decoration-none">
+                        <span class="btn-icon">＋</span> Add New Outfit
+                    </a>
+                </div>
+
+                <div id="outfitsGrid" class="outfits-grid clickable-cards">
+                    <!-- Outfits will be rendered here dynamically -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Page Specific Script -->
+    <script src="/js/outfits.js"></script>
+</body>
+
+</html>
