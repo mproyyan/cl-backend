@@ -1,29 +1,29 @@
 package models
 
 type Item struct {
-	Name  string `json:"name"`
-	Color string `json:"color"`
-	Hex   string `json:"hex"`
+	Name  string `json:"name" bson:"name"`
+	Color string `json:"color" bson:"color"`
+	Hex   string `json:"hex" bson:"hex"`
 }
 
 type Items struct {
-	Top    Item `json:"top"`
-	Bottom Item `json:"bottom"`
-	Outer  Item `json:"outer"`
-	Shoes  Item `json:"shoes"`
+	Top    Item `json:"top" bson:"top"`
+	Bottom Item `json:"bottom" bson:"bottom"`
+	Outer  Item `json:"outer" bson:"outer"`
+	Shoes  Item `json:"shoes" bson:"shoes"`
 }
 
 type Outfit struct {
-	ID             string   `json:"id"`
-	Name           string   `json:"name"`
-	Gender         string   `json:"gender"`
-	StyleTag       string   `json:"style_tag"`
-	HarmonyTag     string   `json:"harmony_tag"`
-	Undertone      string   `json:"undertone"`
-	ContrastLevel  string   `json:"contrast_level"`
-	Environments   []string `json:"environments"`
-	WeatherSupport []string `json:"weather_support"`
-	Items          Items    `json:"items"`
+	ID             string   `json:"id" bson:"_id"`
+	Name           string   `json:"name" bson:"name"`
+	Gender         string   `json:"gender" bson:"gender"`
+	StyleTag       string   `json:"style_tag" bson:"style_tag"`
+	HarmonyTag     string   `json:"harmony_tag" bson:"harmony_tag"`
+	Undertone      string   `json:"undertone" bson:"undertone"`
+	ContrastLevel  string   `json:"contrast_level" bson:"contrast_level"`
+	Environments   []string `json:"environments" bson:"environments"`
+	WeatherSupport []string `json:"weather_support" bson:"weather_support"`
+	Items          Items    `json:"items" bson:"items"`
 }
 
 type OutfitData struct {

@@ -2,6 +2,7 @@ package handlers_test
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
 	"net/http/httptest"
@@ -11,6 +12,14 @@ import (
 	"outfit-recommender/handlers"
 	"outfit-recommender/models"
 )
+
+type MockOutfitRepository struct {
+	Outfits []models.Outfit
+}
+
+func (m *MockOutfitRepository) GetAll(ctx context.Context) ([]models.Outfit, error) {
+	return m.Outfits, nil
+}
 
 func TestRecommend(t *testing.T) {
 	app := fiber.New()
@@ -26,7 +35,8 @@ func TestRecommend(t *testing.T) {
 		},
 	}
 	
-	h := handlers.NewHandler(outfits)
+	repo := &MockOutfitRepository{Outfits: outfits}
+	h := handlers.NewHandler(repo)
 	app.Post("/api/v1/recommend", h.Recommend)
 
 	tests := []struct {
@@ -86,7 +96,8 @@ func TestRecommend(t *testing.T) {
 
 func TestHealth(t *testing.T) {
 	app := fiber.New()
-	h := handlers.NewHandler(nil)
+	repo := &MockOutfitRepository{Outfits: nil}
+	h := handlers.NewHandler(repo)
 	app.Get("/health", h.Health)
 
 	req := httptest.NewRequest("GET", "/health", nil)
@@ -105,7 +116,8 @@ func TestGetOutfits(t *testing.T) {
 		{ID: "1", Gender: "male"},
 		{ID: "2", Gender: "female"},
 	}
-	h := handlers.NewHandler(outfits)
+	repo := &MockOutfitRepository{Outfits: outfits}
+	h := handlers.NewHandler(repo)
 	app.Get("/outfits", h.GetOutfits)
 
 	req := httptest.NewRequest("GET", "/outfits?gender=male", nil)

@@ -10,24 +10,29 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/static"
 
+	"outfit-recommender/db"
 	"outfit-recommender/handlers"
-	"outfit-recommender/loader"
+	"outfit-recommender/repository"
 )
 
 func main() {
-	path := os.Getenv("OUTFITS_JSON")
-	if path == "" {
-		path = "data/outfits.json"
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		mongoURI = "mongodb://localhost:27017"
 	}
 
-	outfits, err := loader.LoadOutfits(path)
-	if err != nil {
-		log.Fatalf("failed to load outfits: %v", err)
+	mongoDB := os.Getenv("MONGO_DB")
+	if mongoDB == "" {
+		mongoDB = "outfit_recommender"
 	}
 
-	log.Printf("Loaded %d outfits from %s", len(outfits), path)
+	// Connect to MongoDB
+	if err := db.Connect(mongoURI, mongoDB); err != nil {
+		log.Fatalf("failed to connect to database: %v", err)
+	}
 
-	h := handlers.NewHandler(outfits)
+	repo := repository.NewMongoOutfitRepository(db.Database)
+	h := handlers.NewHandler(repo)
 
 	app := fiber.New(fiber.Config{
 		AppName:     "Outfit Recommender API",
