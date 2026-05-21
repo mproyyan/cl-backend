@@ -202,7 +202,7 @@ function renderResults(results) {
 
     results.forEach(result => {
         const card = document.createElement("div");
-        card.className = "result-card";
+        card.className = "outfit-card";
 
         const items = result.outfit.items;
         const itemKeys = ["outer", "top", "bottom", "shoes"];
@@ -233,8 +233,14 @@ function renderResults(results) {
         const envTags = result.outfit.environments ? result.outfit.environments.map(e => `<span class="meta-tag">${e}</span>`).join("") : "";
         const weatherTags = result.outfit.weather_support ? result.outfit.weather_support.map(w => `<span class="meta-tag">${w}</span>`).join("") : "";
 
+        let fallbackImage = "https://placehold.co/600x400/f1f5f9/64748b?text=No+Image";
+        let imageUrl = result.outfit.image_url || fallbackImage;
+        let imageHTML = `<img src="${imageUrl}" alt="Outfit Image" class="outfit-card-image" />`;
+        card.classList.add("has-image");
+
         card.innerHTML = `
-            <div class="result-header">
+            ${imageHTML}
+            <div class="outfit-card-header">
                 <div class="header-main">
                     <h2>${result.outfit.name}</h2>
                     <span class="gender-badge ${result.outfit.gender}">${result.outfit.gender}</span>
@@ -248,6 +254,8 @@ function renderResults(results) {
             <div class="meta-tags">
                 <span class="meta-tag accent">${result.outfit.style_tag || "Casual"}</span>
                 ${result.outfit.harmony_tag ? `<span class="meta-tag accent">${result.outfit.harmony_tag}</span>` : ""}
+                ${result.outfit.undertone ? `<span class="meta-tag">Undertone: ${result.outfit.undertone}</span>` : ""}
+                ${result.outfit.contrast_level ? `<span class="meta-tag">Contrast: ${result.outfit.contrast_level}</span>` : ""}
                 ${envTags}
                 ${weatherTags}
             </div>

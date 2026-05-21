@@ -16,6 +16,7 @@ type Items struct {
 type Outfit struct {
 	ID             string   `json:"id" bson:"_id"`
 	Name           string   `json:"name" bson:"name"`
+	ImageURL       string   `json:"image_url" bson:"image_url"`
 	Gender         string   `json:"gender" bson:"gender"`
 	StyleTag       string   `json:"style_tag" bson:"style_tag"`
 	HarmonyTag     string   `json:"harmony_tag" bson:"harmony_tag"`

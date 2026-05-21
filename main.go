@@ -31,6 +31,11 @@ func main() {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
 
+	// Initialize Azure Storage
+	if err := handlers.InitAzure(); err != nil {
+		log.Fatalf("failed to initialize azure storage: %v", err)
+	}
+
 	repo := repository.NewMongoOutfitRepository(db.Database)
 	h := handlers.NewHandler(repo)
 
@@ -72,6 +77,7 @@ func main() {
 	app.Put("/api/v1/outfits/:id", h.UpdateOutfit)
 	app.Delete("/api/v1/outfits/:id", h.DeleteOutfit)
 	app.Post("/api/v1/recommend", h.Recommend)
+	app.Post("/api/v1/upload", h.UploadImage)
 
 	port := os.Getenv("PORT")
 	if port == "" {

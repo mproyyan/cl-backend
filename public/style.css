@@ -975,3 +975,92 @@ body {
         width: 100% !important;
     }
 }
+/* IMAGE UPLOAD & DISPLAY */
+.image-upload-wrapper {
+    background: #f8fafc;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    max-height: 300px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.9) !important;
+    color: var(--danger) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.outfit-card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+}
+
+.outfit-card.has-image .outfit-card-header {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 12px;
+}
+.outfit-card.has-image {
+    padding: 0;
+}
+.outfit-card.has-image .outfit-card-header,
+.outfit-card.has-image .meta-tags,
+.outfit-card.has-image .outfit-items {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.outfit-card.has-image .outfit-card-header {
+    margin-top: 20px;
+}
+.outfit-card.has-image .outfit-items {
+    padding-bottom: 24px;
+}
+
+.result-card.has-image .result-header {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 12px;
+}
+.result-card.has-image {
+    padding: 0;
+}
+.result-card.has-image .result-header,
+.result-card.has-image .meta-tags,
+.result-card.has-image .outfit-items,
+.result-card.has-image .reasons-list {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.result-card.has-image .result-header {
+    margin-top: 20px;
+}
+.result-card.has-image .outfit-items {
+    padding-bottom: 24px;
+}

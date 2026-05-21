@@ -12,6 +12,13 @@ const formContrastLevel = document.getElementById("formContrastLevel");
 const formEnvironments = document.getElementById("formEnvironments");
 const formWeatherSupport = document.getElementById("formWeatherSupport");
 
+// Image Form Elements
+const formImage = document.getElementById("formImage");
+const formImageUrl = document.getElementById("formImageUrl");
+const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+const imagePreview = document.getElementById("imagePreview");
+const removeImageBtn = document.getElementById("removeImageBtn");
+
 // Clothes Items Form Inputs
 const formTopName = document.getElementById("formTopName");
 const formTopColor = document.getElementById("formTopColor");
@@ -51,6 +58,34 @@ syncColorPicker(formTopColorPicker, formTopHex);
 syncColorPicker(formBottomColorPicker, formBottomHex);
 syncColorPicker(formOuterColorPicker, formOuterHex);
 syncColorPicker(formShoesColorPicker, formShoesHex);
+
+// IMAGE PREVIEW LOGIC
+formImage.addEventListener("change", function() {
+    const file = this.files[0];
+    if (file) {
+        // Validate size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert("Image size must be less than 5MB");
+            this.value = "";
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreviewContainer.style.display = "flex";
+            formImageUrl.value = ""; // clear any existing URL since a new file is chosen
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+removeImageBtn.addEventListener("click", function() {
+    formImage.value = "";
+    imagePreview.src = "";
+    imagePreviewContainer.style.display = "none";
+    formImageUrl.value = ""; // Also clear the hidden url so we remove it on update
+});
 
 // DETECT MODE & LOAD DATA
 async function initForm() {
@@ -119,6 +154,13 @@ function populateForm(outfit) {
     formShoesColor.value = outfit.items.shoes.color || "";
     formShoesHex.value = outfit.items.shoes.hex || "";
     if (HEX_REGEX.test(outfit.items.shoes.hex)) formShoesColorPicker.value = outfit.items.shoes.hex;
+    
+    // Image Preview
+    if (outfit.image_url) {
+        formImageUrl.value = outfit.image_url;
+        imagePreview.src = outfit.image_url;
+        imagePreviewContainer.style.display = "flex";
+    }
 }
 
 // FORM SUBMISSION (CREATE/UPDATE)
@@ -153,6 +195,46 @@ outfitForm.addEventListener("submit", async (e) => {
         return;
     }
 
+    // Handle Image Upload First
+    let finalImageUrl = formImageUrl.value; // Keep existing url if any
+
+    if (formImage.files.length > 0) {
+        const file = formImage.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
+        
+        try {
+            // Change button text to indicate upload
+            const submitBtn = outfitForm.querySelector("button[type='submit']");
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Uploading image...";
+            submitBtn.disabled = true;
+
+            const uploadRes = await fetch("/api/v1/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!uploadRes.ok) {
+                const errData = await uploadRes.json();
+                throw new Error(errData.error || "Failed to upload image");
+            }
+            
+            const uploadData = await uploadRes.json();
+            finalImageUrl = uploadData.image_url;
+
+            // Reset button
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        } catch (err) {
+            alert("Error uploading image: " + err.message);
+            const submitBtn = outfitForm.querySelector("button[type='submit']");
+            submitBtn.innerText = "Save Outfit";
+            submitBtn.disabled = false;
+            return;
+        }
+    }
+
     const payload = {
         name,
         gender,
@@ -185,6 +267,10 @@ outfitForm.addEventListener("submit", async (e) => {
             }
         }
     };
+
+    if (finalImageUrl) {
+        payload.image_url = finalImageUrl;
+    }
 
     if (id) {
         payload.id = id;

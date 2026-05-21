@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"errors"
 	"regexp"
 
@@ -80,6 +81,12 @@ func (h *Handler) UpdateOutfit(c fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"error": "id parameter is required"})
 	}
 
+	// Fetch old outfit to check image change
+	oldOutfit, err := h.repo.GetByID(c.Context(), id)
+	if err != nil && !errors.Is(err, mongo.ErrNoDocuments) {
+		return c.Status(500).JSON(fiber.Map{"error": "failed to fetch old outfit"})
+	}
+
 	var outfit models.Outfit
 	if err := c.Bind().Body(&outfit); err != nil {
 		return c.Status(400).JSON(fiber.Map{"error": "malformed JSON body"})
@@ -96,6 +103,11 @@ func (h *Handler) UpdateOutfit(c fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"error": "failed to update outfit"})
 	}
 
+	// If old image exists and is different from new image, delete old image
+	if oldOutfit != nil && oldOutfit.ImageURL != "" && oldOutfit.ImageURL != outfit.ImageURL {
+		_ = DeleteImageFromAzure(context.Background(), oldOutfit.ImageURL)
+	}
+
 	return c.JSON(outfit)
 }
 
@@ -106,11 +118,22 @@ func (h *Handler) DeleteOutfit(c fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"error": "id parameter is required"})
 	}
 
-	if err := h.repo.Delete(c.Context(), id); err != nil {
+	// Fetch outfit first to get ImageURL
+	outfit, err := h.repo.GetByID(c.Context(), id)
+	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return c.Status(404).JSON(fiber.Map{"error": "outfit not found"})
 		}
+		return c.Status(500).JSON(fiber.Map{"error": "failed to fetch outfit for deletion"})
+	}
+
+	if err := h.repo.Delete(c.Context(), id); err != nil {
 		return c.Status(500).JSON(fiber.Map{"error": "failed to delete outfit"})
+	}
+
+	// Delete from Azure if image exists
+	if outfit.ImageURL != "" {
+		_ = DeleteImageFromAzure(context.Background(), outfit.ImageURL)
 	}
 
 	return c.JSON(fiber.Map{"message": "outfit deleted successfully"})

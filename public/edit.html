@@ -63,6 +63,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label>Outfit Image</label>
+                            <div class="image-upload-wrapper">
+                                <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+                                    <img id="imagePreview" src="" alt="Image Preview">
+                                    <button type="button" class="icon-btn delete remove-image-btn" id="removeImageBtn" title="Remove Image">✖</button>
+                                </div>
+                                <input type="file" id="formImage" accept="image/*" />
+                                <input type="hidden" id="formImageUrl" />
+                                <small class="text-muted">Upload an image of this outfit (Max 5MB)</small>
+                            </div>
+                        </div>
+
                         <div class="form-grid-2">
                             <div class="form-group">
                                 <label for="formStyleTag">Style Tag</label>

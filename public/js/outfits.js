@@ -79,7 +79,13 @@ function renderOutfitsGrid(outfits) {
         const envTags = outfit.environments ? outfit.environments.map(e => `<span class="meta-tag">${e}</span>`).join("") : "";
         const weatherTags = outfit.weather_support ? outfit.weather_support.map(w => `<span class="meta-tag">${w}</span>`).join("") : "";
 
+        const fallbackImage = "https://placehold.co/600x400/f1f5f9/64748b?text=No+Image";
+        const imageUrl = outfit.image_url || fallbackImage;
+        const imageHTML = `<img src="${imageUrl}" alt="Outfit Image" class="outfit-card-image" />`;
+        card.classList.add("has-image");
+
         card.innerHTML = `
+            ${imageHTML}
             <div class="outfit-card-header">
                 <div class="header-main">
                     <h2>${outfit.name}</h2>
