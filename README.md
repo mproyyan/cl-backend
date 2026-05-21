@@ -2,7 +2,7 @@
 
 The Outfit Recommender API is a modular REST API built in Go using the [Fiber](https://gofiber.io/) framework. It recommends outfits from a catalog based on a user's gender, color preferences (colors they look best in), and colors they wish to avoid. 
 
-Rather than using simple RGB Euclidean distance, this project employs a **perceptually uniform color difference algorithm (CIE76 Delta E)** to ensure that the recommendations align closely with human visual perception.
+Rather than using simple RGB Euclidean distance, this project employs a **perceptually uniform color difference algorithm (CIEDE2000)** to ensure that the recommendations align closely with human visual perception.
 
 ---
 
@@ -12,7 +12,7 @@ Rather than using simple RGB Euclidean distance, this project employs a **percep
    - [Hex to RGB Conversion](#1-hex-to-rgb-conversion)
    - [RGB to CIE XYZ Space](#2-rgb-to-cie-xyz-space)
    - [CIE XYZ to CIE L\*a\*b\* Space](#3-cie-xyz-to-cie-la*b*-space)
-3. [The Delta Algorithm (CIE76 $\Delta E^*_{ab}$)](#the-delta-algorithm-cie76-delta-e_ab)
+3. [The Delta Algorithm (CIEDE2000)](#the-delta-algorithm-ciede2000)
    - [Delta E to Score Mapping](#delta-e-to-score-mapping)
    - [Avoid Penalty Mapping](#avoid-penalty-mapping)
 4. [Outfit Coherence Calculation](#outfit-coherence-calculation)
@@ -33,21 +33,24 @@ Rather than using simple RGB Euclidean distance, this project employs a **percep
 The project follows a clean, modular structure:
 
 ```
+├── cmd/
+│   └── seed/              # Database seeding script
 ├── color/
 │   └── delta_e.go         # Color conversions, Delta E calculation, and coherence scoring
-├── data/
-│   └── outfits.json       # Outfit catalog (static dataset)
-├── handlers/
-│   ├── recommend.go       # Fiber HTTP route handlers (GET/POST endpoints)
-│   └── recommend_test.go  # Unit tests for route handlers
+├── data/                  # Outfit catalog (multiple JSON files for seeding)
+├── db/                    # MongoDB connection and initialization
+├── handlers/              # Fiber HTTP route handlers (API and Azure Storage integration)
 ├── loader/
-│   └── loader.go          # JSON data utility to load outfits from disk
+│   └── loader.go          # JSON data utility to load outfits from a directory
 ├── models/
 │   └── outfit.go          # Core domain models (Item, Outfit, Request/Response payloads)
 ├── public/                # Static assets and frontend UI code
+├── repository/            # MongoDB data access layer
 ├── scoring/
 │   ├── engine.go          # Recommendation scoring, penalty, and ranking logic
 │   └── engine_test.go     # Unit tests for the recommendation engine
+├── docker-compose.yml     # Docker Compose configuration for MongoDB and API
+├── .env                   # Environment variables for MongoDB and Azure
 ├── go.mod
 ├── go.sum
 └── main.go                # API entrypoint, server configuration, and router
@@ -93,58 +96,46 @@ The $L^*a^*b^*$ coordinates are then calculated as:
 
 ---
 
-## The Delta Algorithm (CIE76 $\Delta E^*_{ab}$)
+## The Delta Algorithm (CIEDE2000)
 
-Once colors are represented in $L^*a^*b^*$ coordinates, the perceptual color difference between two colors is calculated using the **CIE76 Delta E** ($\Delta E^*_{ab}$) formula. This is the Euclidean distance between the two points:
+Once colors are represented in $L^*a^*b^*$ coordinates, the perceptual color difference between two colors is calculated using the **CIEDE2000** formula. CIEDE2000 is significantly more accurate than CIE76, particularly for blues and dark colors, making it highly effective for seasonal color analysis.
 
-$$\Delta E^*_{ab} = \sqrt{(L_1^* - L_2^*)^2 + (a_1^* - a_2^*)^2 + (b_1^* - b_2^*)^2}$$
-
-Interpretation of $\Delta E^*_{ab}$ values:
-- $\Delta E < 1.0$: Not perceptible by the human eye.
-- $1.0 \le \Delta E < 2.0$: Scarcely perceptible, observable by close inspection.
-- $2.0 \le \Delta E < 10.0$: Perceptible at a glance.
-- $10.0 \le \Delta E < 49.0$: Colors are more similar than opposite.
-- $\Delta E \ge 49.0$: Colors are exact opposites.
+The API uses the CIEDE2000 calculation to determine the perceptual distance ($\Delta E$) between two colors. A smaller $\Delta E$ implies a closer visual match.
 
 ### Delta E to Score Mapping
-The API maps the computed $\Delta E$ value to a matching score between $0.0$ and $1.0$. The mapping is a piecewise function designed to award high scores for close matches and taper off as the difference increases:
+The API maps the computed $\Delta E$ value to a matching score between $0.0$ and $1.0$. The CIEDE2000 scale is perceptually tighter than CIE76, so the thresholds are recalibrated to reward extremely close matches and taper off strictly:
 
 | $\Delta E$ Range | Score Formula | Visual Matching Quality |
 | :--- | :--- | :--- |
-| $\Delta E < 5$ | $1.0$ | Identical / indistinguishable |
-| $5 \le \Delta E < 10$ | $0.85 - (\Delta E - 5) \times 0.030$ | Very close match (tapers $0.85 \to 0.70$) |
-| $10 \le \Delta E < 20$ | $0.70 - (\Delta E - 10) \times 0.025$ | Perceptible close match (tapers $0.70 \to 0.45$) |
-| $20 \le \Delta E < 35$ | $0.45 - (\Delta E - 20) \times 0.020$ | Tolerable match (tapers $0.45 \to 0.15$) |
-| $35 \le \Delta E < 50$ | $0.15 - (\Delta E - 35) \times 0.005$ | Poor match (tapers $0.15 \to 0.075$) |
-| $\Delta E \ge 50$ | $0.0$ | Clashing / No match |
+| $\Delta E < 3$ | $1.0$ | Near-identical match |
+| $3 \le \Delta E < 8$ | $0.90 - (\Delta E - 3) \times 0.030$ | Close match (tapers $0.90 \to 0.75$) |
+| $8 \le \Delta E < 18$ | $0.75 - (\Delta E - 8) \times 0.025$ | Similar family but distinct shade (tapers $0.75 \to 0.50$) |
+| $18 \le \Delta E < 30$ | $0.50 - (\Delta E - 18) \times 0.020$ | Related but noticeably different (tapers $0.50 \to 0.26$) |
+| $30 \le \Delta E < 45$ | $0.26 - (\Delta E - 30) \times 0.010$ | Distant, different color family (tapers $0.26 \to 0.11$) |
+| $\Delta E \ge 45$ | $0.0$ | Clashing / No match |
 
 *Note: The score is automatically clamped to the $[0.0, 1.0]$ range.*
 
 ### Avoid Penalty Mapping
-If an item's color is close to a color the user wants to avoid, a penalty score between $0.0$ and $1.0$ is calculated:
+If an item's color is close to a color the user wants to avoid, a penalty score between $0.0$ and $1.0$ is calculated. The decay is steeper so avoid-colors have a sharp, localized effect:
 
 | $\Delta E$ Range | Penalty Formula | Severity |
 | :--- | :--- | :--- |
-| $\Delta E < 5$ | $1.0$ | Severe overlap with avoided color |
-| $5 \le \Delta E < 15$ | $0.90 - (\Delta E - 5) \times 0.050$ | Moderate overlap (tapers $0.90 \to 0.40$) |
-| $15 \le \Delta E < 30$ | $0.40 - (\Delta E - 15) \times 0.020$ | Mild overlap (tapers $0.40 \to 0.00$) |
-| $\Delta E \ge 30$ | $0.0$ | Safe / no penalty |
+| $\Delta E < 3$ | $1.0$ | Essentially the same color (full penalty) |
+| $3 \le \Delta E < 12$ | $0.90 - (\Delta E - 3) \times 0.055$ | Strong penalty that decays (tapers $0.90 \to 0.405$) |
+| $12 \le \Delta E < 25$ | $0.40 - (\Delta E - 12) \times 0.025$ | Moderate residual penalty (tapers $0.40 \to 0.075$) |
+| $\Delta E \ge 25$ | $0.0$ | Far enough / no penalty |
 
 ---
 
 ## Outfit Coherence Calculation
 
-An outfit's quality depends not only on matching individual items to user preferences, but also on how well the pieces in the outfit go together. The API computes an **Outfit Coherence** score using the HSL (Hue, Saturation, Lightness) color space:
+An outfit's quality depends not only on matching individual items to user preferences, but also on how well the pieces in the outfit go together. The API computes an **Outfit Coherence** score primarily focused on undertone consistency and hue spread:
 
-1. **Filter Saturated Colors**: Neutral colors (like white, gray, black, beige, etc.) do not clash with other hues. Thus, only items with a saturation $S > 10\%$ are selected.
-2. **Handle Low Saturation Outfits**: If there are fewer than 2 saturated colors in the outfit, it is highly neutral or monochrome. These are visually safe, so the API returns a default coherence score of `0.8`.
-3. **Calculate Hue Distances**: For outfits with $\ge 2$ saturated items, the API computes the average pairwise shortest distance on the $360^\circ$ hue wheel:
-   $$\text{distance}(H_1, H_2) = \min(|H_1 - H_2|, 360 - |H_1 - H_2|)$$
-4. **Map to Coherence Score**:
-   - $\text{Average Difference} < 30^\circ$: Coherence = **$1.0$** (analogous, highly cohesive)
-   - $\text{Average Difference} < 60^\circ$: Coherence = **$0.85$** (harmonious)
-   - $\text{Average Difference} < 120^\circ$: Coherence = **$0.65$** (partially cohesive)
-   - $\text{Average Difference} \ge 120^\circ$: Coherence = **$0.40$** (less cohesive / high contrast clashing potential)
+1. **Evaluate Undertones**: Colors are classified as warm (e.g., reds, yellows) or cool (e.g., blues, purples) based on their hue and saturation. Mixing warm and cool undertones receives a severe penalty, as it is the primary violation in seasonal color analysis.
+2. **Handle Low Saturation Outfits**: Neutral colors do not clash. If an outfit has fewer than 2 saturated colors, it is considered visually safe and receives a default coherence score of `0.80`.
+3. **Calculate Hue Spread**: For saturated items, the average pairwise distance on the $360^\circ$ hue wheel is computed. Analogous or monochromatic palettes ($< 30^\circ$) score perfectly, while wider complementary schemes score progressively lower.
+4. **Final Coherence Score**: The coherence blends the **undertone consistency** (weighted at 65%) and the **hue spread** (weighted at 35%) to yield a final score between `0.0` and `1.0`.
 
 ---
 
@@ -163,12 +154,12 @@ Not all items in an outfit contribute equally to its overall appearance. The sco
 For a given outfit, the scoring engine calculates:
 
 1. **Preferred Color Match ($T_{\text{best}}$)**:
-   For each item, find its minimum Delta E to any of the user's preferred colors (`best_colors`), compute the match score, and weight it:
+   The API supports a **two-tier** matching system. For each item, it evaluates the match against **Core Hexes** (weight $1.0$) and **Extended Hexes** (weight $0.55$). It chooses the higher of the two weighted scores, ensuring core palette matches outperform extended ones:
    $$T_{\text{best}} = \sum_{i \in \text{Items}} (\text{BestMatch}_i \times \text{Weight}_i)$$
 
 2. **Avoided Color Penalty ($T_{\text{avoid}}$)**:
-   For each item, find its minimum Delta E to any of the user's avoided colors (`avoid_colors`), compute the penalty score, and apply a penalty multiplier ($1.6$):
-   $$T_{\text{avoid}} = \sum_{i \in \text{Items}} (\text{AvoidPenalty}_i \times \text{Weight}_i \times 1.6)$$
+   For each item, find its minimum Delta E to any of the user's avoided colors (`avoid_colors`), compute the penalty score, and apply a penalty multiplier ($1.4$):
+   $$T_{\text{avoid}} = \sum_{i \in \text{Items}} (\text{AvoidPenalty}_i \times \text{Weight}_i \times 1.4)$$
 
 3. **Coherence Bonus ($B_{\text{coherence}}$)**:
    $$\text{Coherence Bonus} = \text{OutfitCoherence}(\text{items}) \times 0.15$$
@@ -207,6 +198,7 @@ Returns all outfits loaded in the system, optionally filtered by gender.
     {
       "id": "olive-cafe-layers",
       "name": "olive cafe layers",
+      "image_url": "https://storage.example.com/outfits/olive-cafe.jpg",
       "gender": "male",
       "style_tag": "casual",
       "harmony_tag": "earthy",
@@ -222,6 +214,25 @@ Returns all outfits loaded in the system, optionally filtered by gender.
       }
     }
   ]
+  ```
+
+### Create, Update, Delete Outfit
+Standard REST endpoints for managing the outfit catalog.
+- **POST** `/api/v1/outfits`
+- **PUT** `/api/v1/outfits/:id`
+- **DELETE** `/api/v1/outfits/:id`
+
+### Upload Image
+Uploads an image to Azure Blob Storage and returns the public URL.
+- **URL**: `/api/v1/upload`
+- **Method**: `POST`
+- **Content-Type**: `multipart/form-data`
+- **Body**: form-data with `image` field containing the file.
+- **Response**: `200 OK`
+  ```json
+  {
+    "image_url": "https://account.blob.core.windows.net/outfits/uuid.jpg"
+  }
   ```
 
 ### Get Outfit Recommendations
@@ -245,6 +256,7 @@ Scores and ranks outfits based on user preferences and filters out mismatched ge
         "outfit": {
           "id": "olive-cafe-layers",
           "name": "olive cafe layers",
+          "image_url": "https://storage.example.com/outfits/olive-cafe.jpg",
           "gender": "male",
           "style_tag": "casual",
           "harmony_tag": "earthy",
@@ -335,26 +347,26 @@ Scores and ranks outfits based on user preferences and filters out mismatched ge
 
 ## Running the Project
 
-1. Make sure you have Go installed ($1.22+$ recommended).
+1. Make sure you have Docker and Docker Compose installed.
 2. Clone the repository and navigate to the project directory.
-3. Install dependencies:
-   ```bash
-   go mod download
+3. Create a `.env` file based on your environment. Example:
+   ```env
+   MONGO_URI=mongodb://mongo:27017
+   MONGO_DB=outfit_recommender
+   PORT=3000
+   AZURE_STORAGE_CONNECTION_STRING=your_connection_string
+   AZURE_STORAGE_CONTAINER_NAME=outfits
    ```
-4. Run the API server:
+4. Start the application using Docker Compose:
    ```bash
-   go run main.go
+   docker-compose up -d --build
    ```
-   *By default, the server runs on port `3000` and loads outfits from `data/outfits.json`.*
+   *The API will be available on port `3000` and MongoDB on `27017`.*
 
-### Environment Variables
-You can customize the API behavior using the following environment variables:
-- `PORT`: The port number on which the server should listen (default: `3000`).
-- `OUTFITS_JSON`: Path to the outfits catalog file (default: `data/outfits.json`).
-
-Example:
+### Database Seeding
+To populate the MongoDB database with initial outfit data from the `data/` directory:
 ```bash
-PORT=8080 OUTFITS_JSON=my_outfits.json go run main.go
+go run cmd/seed/main.go
 ```
 
 ---
