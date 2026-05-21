@@ -1,0 +1,764 @@
+{
+    "outfits": [
+        {
+            "id": "soft-lavender-layers",
+            "name": "soft lavender layers",
+            "gender": "male",
+            "style_tag": "smart_casual",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor",
+                "outdoor"
+            ],
+            "weather_support": [
+                "sunny",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "button-down shirt",
+                    "color": "off-white",
+                    "hex": "#F2F2F2"
+                },
+                "bottom": {
+                    "name": "tailored pants",
+                    "color": "light gray",
+                    "hex": "#D4D4D4"
+                },
+                "outer": {
+                    "name": "cardigan",
+                    "color": "lavender",
+                    "hex": "#B8A8C8"
+                },
+                "shoes": {
+                    "name": "loafers",
+                    "color": "off-white",
+                    "hex": "#EDEDED"
+                }
+            }
+        },
+        {
+            "id": "dusty-blue-street",
+            "name": "dusty blue street",
+            "gender": "male",
+            "style_tag": "streetwear",
+            "harmony_tag": "cool",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "night",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "oversized tee",
+                    "color": "off-white",
+                    "hex": "#F4F4F4"
+                },
+                "bottom": {
+                    "name": "joggers",
+                    "color": "dusty blue",
+                    "hex": "#7282A2"
+                },
+                "outer": {
+                    "name": "hoodie",
+                    "color": "lavender",
+                    "hex": "#C0B0D0"
+                },
+                "shoes": {
+                    "name": "platform sneakers",
+                    "color": "light gray",
+                    "hex": "#CFCFCF"
+                }
+            }
+        },
+        {
+            "id": "mauve-evening-form",
+            "name": "mauve evening form",
+            "gender": "female",
+            "style_tag": "formal",
+            "harmony_tag": "monochromatic",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor"
+            ],
+            "weather_support": [
+                "night"
+            ],
+            "items": {
+                "top": {
+                    "name": "blouse",
+                    "color": "mauve",
+                    "hex": "#A87888"
+                },
+                "bottom": {
+                    "name": "midi skirt",
+                    "color": "mauve",
+                    "hex": "#B08090"
+                },
+                "outer": {
+                    "name": "wool coat",
+                    "color": "blush",
+                    "hex": "#E4B6AE"
+                },
+                "shoes": {
+                    "name": "ankle boots",
+                    "color": "off-white",
+                    "hex": "#F0F0F0"
+                }
+            }
+        },
+        {
+            "id": "airy-gray-edit",
+            "name": "airy gray edit",
+            "gender": "female",
+            "style_tag": "minimalist",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor",
+                "outdoor"
+            ],
+            "weather_support": [
+                "sunny"
+            ],
+            "items": {
+                "top": {
+                    "name": "knit sweater",
+                    "color": "off-white",
+                    "hex": "#F3F3F3"
+                },
+                "bottom": {
+                    "name": "wide-leg pants",
+                    "color": "light gray",
+                    "hex": "#D8D8D8"
+                },
+                "outer": {
+                    "name": "cardigan",
+                    "color": "lavender",
+                    "hex": "#B4A4C4"
+                },
+                "shoes": {
+                    "name": "mules",
+                    "color": "off-white",
+                    "hex": "#EFEFEF"
+                }
+            }
+        },
+        {
+            "id": "blue-weekend-flow",
+            "name": "blue weekend flow",
+            "gender": "male",
+            "style_tag": "casual",
+            "harmony_tag": "cool",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "sunny",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "polo",
+                    "color": "dusty blue",
+                    "hex": "#6A7A9A"
+                },
+                "bottom": {
+                    "name": "shorts",
+                    "color": "light gray",
+                    "hex": "#D2D2D2"
+                },
+                "outer": {
+                    "name": "windbreaker",
+                    "color": "off-white",
+                    "hex": "#EDEDED"
+                },
+                "shoes": {
+                    "name": "sneakers",
+                    "color": "lavender",
+                    "hex": "#B8A8C8"
+                }
+            }
+        },
+        {
+            "id": "lavender-office-balance",
+            "name": "lavender office balance",
+            "gender": "male",
+            "style_tag": "formal",
+            "harmony_tag": "analogous",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "indoor"
+            ],
+            "weather_support": [
+                "night",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "turtleneck",
+                    "color": "off-white",
+                    "hex": "#F4F4F4"
+                },
+                "bottom": {
+                    "name": "tailored pants",
+                    "color": "lavender",
+                    "hex": "#B0A0C0"
+                },
+                "outer": {
+                    "name": "blazer",
+                    "color": "dusty blue",
+                    "hex": "#7A8AAA"
+                },
+                "shoes": {
+                    "name": "oxfords",
+                    "color": "light gray",
+                    "hex": "#D0D0D0"
+                }
+            }
+        },
+        {
+            "id": "gray-rain-breeze",
+            "name": "gray rain breeze",
+            "gender": "female",
+            "style_tag": "casual",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "outdoor",
+                "indoor"
+            ],
+            "weather_support": [
+                "rainy",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "tee",
+                    "color": "off-white",
+                    "hex": "#F2F2F2"
+                },
+                "bottom": {
+                    "name": "shorts",
+                    "color": "light gray",
+                    "hex": "#D5D5D5"
+                },
+                "outer": {
+                    "name": "windbreaker",
+                    "color": "lavender",
+                    "hex": "#C0B0D0"
+                },
+                "shoes": {
+                    "name": "sneakers",
+                    "color": "blush",
+                    "hex": "#E8BBB2"
+                }
+            }
+        },
+        {
+            "id": "mauve-soft-motion",
+            "name": "mauve soft motion",
+            "gender": "male",
+            "style_tag": "streetwear",
+            "harmony_tag": "monochromatic",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "night",
+                "rainy"
+            ],
+            "items": {
+                "top": {
+                    "name": "oversized tee",
+                    "color": "blush",
+                    "hex": "#EABCB4"
+                },
+                "bottom": {
+                    "name": "joggers",
+                    "color": "mauve",
+                    "hex": "#A87888"
+                },
+                "outer": {
+                    "name": "bomber jacket",
+                    "color": "mauve",
+                    "hex": "#B08090"
+                },
+                "shoes": {
+                    "name": "platform sneakers",
+                    "color": "light gray",
+                    "hex": "#D6D6D6"
+                }
+            }
+        },
+        {
+            "id": "silver-office-glow",
+            "name": "silver office glow",
+            "gender": "female",
+            "style_tag": "smart_casual",
+            "harmony_tag": "cool",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor"
+            ],
+            "weather_support": [
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "button-down shirt",
+                    "color": "off-white",
+                    "hex": "#F1F1F1"
+                },
+                "bottom": {
+                    "name": "tailored pants",
+                    "color": "light gray",
+                    "hex": "#C8C8C8"
+                },
+                "outer": {
+                    "name": "blazer",
+                    "color": "dusty blue",
+                    "hex": "#7484A4"
+                },
+                "shoes": {
+                    "name": "loafers",
+                    "color": "lavender",
+                    "hex": "#B6A6C6"
+                }
+            }
+        },
+        {
+            "id": "lavender-rain-soft",
+            "name": "lavender rain soft",
+            "gender": "male",
+            "style_tag": "casual",
+            "harmony_tag": "analogous",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "rainy",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "tee",
+                    "color": "off-white",
+                    "hex": "#F4F4F4"
+                },
+                "bottom": {
+                    "name": "chinos",
+                    "color": "light gray",
+                    "hex": "#D8D8D8"
+                },
+                "outer": {
+                    "name": "puffer jacket",
+                    "color": "lavender",
+                    "hex": "#C0B0D0"
+                },
+                "shoes": {
+                    "name": "chelsea boots",
+                    "color": "dusty blue",
+                    "hex": "#7282A2"
+                }
+            }
+        },
+        {
+            "id": "rose-light-elegance",
+            "name": "rose light elegance",
+            "gender": "female",
+            "style_tag": "formal",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor"
+            ],
+            "weather_support": [
+                "night"
+            ],
+            "items": {
+                "top": {
+                    "name": "blouse",
+                    "color": "blush",
+                    "hex": "#EEC0B8"
+                },
+                "bottom": {
+                    "name": "midi skirt",
+                    "color": "off-white",
+                    "hex": "#EDEDED"
+                },
+                "outer": {
+                    "name": "trench coat",
+                    "color": "lavender",
+                    "hex": "#B8A8C8"
+                },
+                "shoes": {
+                    "name": "ankle boots",
+                    "color": "light gray",
+                    "hex": "#D4D4D4"
+                }
+            }
+        },
+        {
+            "id": "soft-blue-minimal",
+            "name": "soft blue minimal",
+            "gender": "male",
+            "style_tag": "minimalist",
+            "harmony_tag": "monochromatic",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor",
+                "outdoor"
+            ],
+            "weather_support": [
+                "sunny"
+            ],
+            "items": {
+                "top": {
+                    "name": "knit",
+                    "color": "dusty blue",
+                    "hex": "#7A8AAA"
+                },
+                "bottom": {
+                    "name": "trousers",
+                    "color": "dusty blue",
+                    "hex": "#6F7F9F"
+                },
+                "outer": {
+                    "name": "cardigan",
+                    "color": "light gray",
+                    "hex": "#D5D5D5"
+                },
+                "shoes": {
+                    "name": "loafers",
+                    "color": "off-white",
+                    "hex": "#F2F2F2"
+                }
+            }
+        },
+        {
+            "id": "mauve-city-balance",
+            "name": "mauve city balance",
+            "gender": "female",
+            "style_tag": "smart_casual",
+            "harmony_tag": "analogous",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "indoor",
+                "outdoor"
+            ],
+            "weather_support": [
+                "sunny",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "blouse",
+                    "color": "blush",
+                    "hex": "#E7B8AF"
+                },
+                "bottom": {
+                    "name": "wide-leg pants",
+                    "color": "light gray",
+                    "hex": "#D8D8D8"
+                },
+                "outer": {
+                    "name": "trench coat",
+                    "color": "mauve",
+                    "hex": "#B08090"
+                },
+                "shoes": {
+                    "name": "mules",
+                    "color": "off-white",
+                    "hex": "#F3F3F3"
+                }
+            }
+        },
+        {
+            "id": "blue-night-motion",
+            "name": "blue night motion",
+            "gender": "male",
+            "style_tag": "streetwear",
+            "harmony_tag": "cool",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "night",
+                "rainy"
+            ],
+            "items": {
+                "top": {
+                    "name": "tank top",
+                    "color": "off-white",
+                    "hex": "#F4F4F4"
+                },
+                "bottom": {
+                    "name": "joggers",
+                    "color": "dusty blue",
+                    "hex": "#6D7D9D"
+                },
+                "outer": {
+                    "name": "hoodie",
+                    "color": "lavender",
+                    "hex": "#B0A0C0"
+                },
+                "shoes": {
+                    "name": "platform sneakers",
+                    "color": "light gray",
+                    "hex": "#D2D2D2"
+                }
+            }
+        },
+        {
+            "id": "silver-soft-structure",
+            "name": "silver soft structure",
+            "gender": "female",
+            "style_tag": "minimalist",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor"
+            ],
+            "weather_support": [
+                "cloudy",
+                "sunny"
+            ],
+            "items": {
+                "top": {
+                    "name": "turtleneck",
+                    "color": "off-white",
+                    "hex": "#EFEFEF"
+                },
+                "bottom": {
+                    "name": "tailored pants",
+                    "color": "light gray",
+                    "hex": "#D4D4D4"
+                },
+                "outer": {
+                    "name": "wool coat",
+                    "color": "lavender",
+                    "hex": "#C0B0D0"
+                },
+                "shoes": {
+                    "name": "loafers",
+                    "color": "blush",
+                    "hex": "#E4B6AE"
+                }
+            }
+        },
+        {
+            "id": "blush-campus-flow",
+            "name": "blush campus flow",
+            "gender": "female",
+            "style_tag": "casual",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "sunny"
+            ],
+            "items": {
+                "top": {
+                    "name": "crop top",
+                    "color": "blush",
+                    "hex": "#DDB0A8"
+                },
+                "bottom": {
+                    "name": "wide-leg pants",
+                    "color": "off-white",
+                    "hex": "#F0F0F0"
+                },
+                "outer": {
+                    "name": "hoodie",
+                    "color": "lavender",
+                    "hex": "#B8A8C8"
+                },
+                "shoes": {
+                    "name": "sneakers",
+                    "color": "light gray",
+                    "hex": "#D3D3D3"
+                }
+            }
+        },
+        {
+            "id": "blue-smart-rain",
+            "name": "blue smart rain",
+            "gender": "male",
+            "style_tag": "smart_casual",
+            "harmony_tag": "analogous",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor",
+                "indoor"
+            ],
+            "weather_support": [
+                "rainy",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "shirt",
+                    "color": "off-white",
+                    "hex": "#F0F0F0"
+                },
+                "bottom": {
+                    "name": "chinos",
+                    "color": "light gray",
+                    "hex": "#D6D6D6"
+                },
+                "outer": {
+                    "name": "flannel",
+                    "color": "dusty blue",
+                    "hex": "#7484A4"
+                },
+                "shoes": {
+                    "name": "derby shoes",
+                    "color": "lavender",
+                    "hex": "#B6A6C6"
+                }
+            }
+        },
+        {
+            "id": "mauve-urban-motion",
+            "name": "mauve urban motion",
+            "gender": "female",
+            "style_tag": "streetwear",
+            "harmony_tag": "monochromatic",
+            "undertone": "cool",
+            "contrast_level": "medium",
+            "environments": [
+                "outdoor"
+            ],
+            "weather_support": [
+                "night"
+            ],
+            "items": {
+                "top": {
+                    "name": "oversized tee",
+                    "color": "blush",
+                    "hex": "#E7B8AF"
+                },
+                "bottom": {
+                    "name": "joggers",
+                    "color": "mauve",
+                    "hex": "#A07080"
+                },
+                "outer": {
+                    "name": "bomber jacket",
+                    "color": "mauve",
+                    "hex": "#B08090"
+                },
+                "shoes": {
+                    "name": "platform sneakers",
+                    "color": "off-white",
+                    "hex": "#F1F1F1"
+                }
+            }
+        },
+        {
+            "id": "silver-gallery-edit",
+            "name": "silver gallery edit",
+            "gender": "female",
+            "style_tag": "formal",
+            "harmony_tag": "cool",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "indoor"
+            ],
+            "weather_support": [
+                "night",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "blouse",
+                    "color": "off-white",
+                    "hex": "#F4F4F4"
+                },
+                "bottom": {
+                    "name": "tailored pants",
+                    "color": "light gray",
+                    "hex": "#D2D2D2"
+                },
+                "outer": {
+                    "name": "blazer",
+                    "color": "dusty blue",
+                    "hex": "#7A8AAA"
+                },
+                "shoes": {
+                    "name": "oxfords",
+                    "color": "lavender",
+                    "hex": "#B8A8C8"
+                }
+            }
+        },
+        {
+            "id": "soft-weekend-layers",
+            "name": "soft weekend layers",
+            "gender": "female",
+            "style_tag": "minimalist",
+            "harmony_tag": "light",
+            "undertone": "cool",
+            "contrast_level": "low",
+            "environments": [
+                "outdoor",
+                "indoor"
+            ],
+            "weather_support": [
+                "sunny",
+                "cloudy"
+            ],
+            "items": {
+                "top": {
+                    "name": "sweater",
+                    "color": "off-white",
+                    "hex": "#F3F3F3"
+                },
+                "bottom": {
+                    "name": "midi skirt",
+                    "color": "light gray",
+                    "hex": "#D0D0D0"
+                },
+                "outer": {
+                    "name": "cardigan",
+                    "color": "lavender",
+                    "hex": "#B4A4C4"
+                },
+                "shoes": {
+                    "name": "mules",
+                    "color": "blush",
+                    "hex": "#E6B8B0"
+                }
+            }
+        }
+    ]
+}

@@ -29,9 +29,9 @@ func main() {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
 
-	path := os.Getenv("OUTFITS_JSON")
+	path := os.Getenv("OUTFITS_PATH")
 	if path == "" {
-		path = "data/outfits.json"
+		path = "data"
 	}
 
 	log.Printf("Reading outfits from %s...", path)
