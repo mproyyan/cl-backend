@@ -32,9 +32,10 @@ type OutfitData struct {
 }
 
 type RecommendRequest struct {
-	BestColors  []string `json:"best_colors"`
-	AvoidColors []string `json:"avoid_colors"`
-	Gender      string   `json:"gender"`
+	BestColors     []string `json:"best_colors"`
+	AvoidColors    []string `json:"avoid_colors"`
+	ExtendedColors []string `json:"extended_colors"`
+	Gender         string   `json:"gender"`
 }
 
 type ItemScore struct {
