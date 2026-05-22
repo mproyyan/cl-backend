@@ -78,6 +78,7 @@ func main() {
 	app.Delete("/api/v1/outfits/:id", h.DeleteOutfit)
 	app.Post("/api/v1/recommend", h.Recommend)
 	app.Post("/api/v1/upload", h.UploadImage)
+	app.Post("/api/v1/analyze-color", h.AnalyzeColor)
 
 	port := os.Getenv("PORT")
 	if port == "" {

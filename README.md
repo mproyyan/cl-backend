@@ -235,6 +235,37 @@ Uploads an image to Azure Blob Storage and returns the public URL.
   }
   ```
 
+### Analyze Color
+Accepts a facial photo and returns a comprehensive personal color analysis, including undertone, skintone, contrast, and recommended seasonal color palettes.
+- **URL**: `/api/v1/analyze-color`
+- **Method**: `POST`
+- **Content-Type**: `multipart/form-data`
+- **Body**: form-data with `image` field containing the photo.
+- **Response**: `200 OK`
+  ```json
+  {
+    "color_type": "Light Summer",
+    "undertone": {
+      "explanation": "Undertone is the natural color...",
+      "value": { "name": "Cool", "explanation": "Your skin naturally carries..." }
+    },
+    "skintone": {
+      "explanation": "Skintone refers to...",
+      "value": { "name": "Medium Skintone", "explanation": "Your skin has a balanced depth..." }
+    },
+    "contrast": {
+      "explanation": "Contrast describes the level...",
+      "value": { "name": "Low Contrast", "explanation": "Your features blend together..." }
+    },
+    "best_colors": [
+      { "name": "soft cool blue-gray", "hex": "#B8CCD8" }
+    ],
+    "avoid_color": [
+      { "name": "warm burnt orange", "hex": "#D4622A" }
+    ]
+  }
+  ```
+
 ### Get Outfit Recommendations
 Scores and ranks outfits based on user preferences and filters out mismatched genders.
 - **URL**: `/api/v1/recommend`
