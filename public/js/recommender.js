@@ -23,7 +23,7 @@ const presets = {
     // SPRING — warm undertone, clear energy
     // ─────────────────────────────────────────────
 
-    "Bright Spring": {
+    "Clear Spring": {
         // Warm, vivid, high contrast. Clear saturated warm colors only.
         best: [
             "#E8472A", // vivid warm red-orange
@@ -48,7 +48,7 @@ const presets = {
         ],
     },
 
-    "True Spring": {
+    "Warm Spring": {
         // Warm, energetic, medium-high saturation. No dusty or grayish colors.
         best: [
             "#F5963C", // warm amber orange
@@ -127,7 +127,7 @@ const presets = {
         ],
     },
 
-    "True Summer": {
+    "Cool Summer": {
         // Cool, muted, elegant. Medium contrast. No warm earth tones.
         best: [
             "#7A90A8", // cool medium blue-gray
@@ -206,7 +206,7 @@ const presets = {
         ],
     },
 
-    "True Autumn": {
+    "Warm Autumn": {
         // Warm, rich, earthy. Medium contrast. Grounded deep tones.
         best: [
             "#B85C20", // rich warm rust
@@ -260,7 +260,7 @@ const presets = {
     // WINTER — cool undertone, pure/sharp energy
     // ─────────────────────────────────────────────
 
-    "Bright Winter": {
+    "Clear Winter": {
         // Cool, vivid, high contrast. Clear saturated cool colors.
         // Reds replaced with cool fuchsia/magenta — Winter reds are
         // always magenta-leaning, never orange-leaning.
@@ -287,7 +287,7 @@ const presets = {
         ],
     },
 
-    "True Winter": {
+    "Cool Winter": {
         // Cool, pure, maximum contrast. Navy, white, black, cool jewel tones.
         // Deep wine/plum used instead of warm red — True Winter reds are
         // cool plum-reds and wine tones, not orange-reds.
