@@ -13,20 +13,30 @@ services:
       retries: 10
       start_period: 60s
 
+  analyzer:
+    build: ./analyzer
+    container_name: outfit-recommender-analyzer
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+
   web:
-    build: .
+    build: ./backend
     container_name: outfit-recommender-api
     ports:
       - "3000:3000"
     depends_on:
       mongo:
         condition: service_healthy
+      analyzer:
+        condition: service_started
     env_file:
-      - .env
+      - ./backend/.env
     environment:
       - MONGO_URI=mongodb://mongo:27017
       - MONGO_DB=outfit_recommender
       - PORT=3000
+      - COLOR_DETECTION_API_URL=http://analyzer:8000/api/v1/color-analysis
 
 volumes:
   mongo-data:

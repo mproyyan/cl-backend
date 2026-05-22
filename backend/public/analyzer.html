@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Analysis - FitRecommend</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .upload-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .upload-card:hover, .upload-card.dragover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .upload-text {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .preview-container {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 24px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .preview-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .change-image-btn {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+        }
+
+        .change-image-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Results styling */
+        .analysis-results {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .analysis-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .color-type-title {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .trait-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .trait-label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .trait-value {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .trait-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .palettes-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .palette-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Premium Glassmorphism Navbar -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">FitRecommend</span>
+            </div>
+            <nav class="nav-tabs">
+                <a href="/" class="tab-btn">
+                    <span class="tab-icon">🔮</span> Recommender
+                </a>
+                <a href="/outfits" class="tab-btn">
+                    <span class="tab-icon">👔</span> Wardrobe Manager
+                </a>
+                <a href="/analyzer" class="tab-btn active">
+                    <span class="tab-icon">📸</span> Color Analysis
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section id="analyzerView" class="view-panel active">
+                <div class="view-header">
+                    <h1>Discover Your True Colors</h1>
+                    <p class="subtitle">Upload a clear photo of your face under natural lighting to find your personal color type</p>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="card" id="uploadSection">
+                    <input type="file" id="imageInput" accept="image/jpeg, image/png, image/webp" />
+                    <label for="imageInput" class="upload-card" id="dropZone">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-text">Click or drag photo here</div>
+                        <div class="upload-hint">Supports JPG, PNG, WEBP (Max 5MB)</div>
+                    </label>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="preview-container" id="previewContainer">
+                    <img id="imagePreview" src="" alt="Face Preview" />
+                    <button class="change-image-btn" id="changeBtn">Change Photo</button>
+                </div>
+
+                <button id="analyzeBtn" class="primary-btn" style="display: none;">
+                    <span>Analyze My Colors</span>
+                    <span class="btn-icon">✨</span>
+                </button>
+
+                <!-- Results Section -->
+                <div id="resultsSection" class="analysis-results">
+                    <div class="analysis-header">
+                        <div class="color-type-title" id="resColorType">Loading...</div>
+                        <p class="subtitle">Based on your features, this is your optimal seasonal palette</p>
+                    </div>
+
+                    <div class="traits-grid">
+                        <div class="trait-card">
+                            <div class="trait-label">Undertone</div>
+                            <div class="trait-value" id="resUndertoneName">-</div>
+                            <div class="trait-desc" id="resUndertoneDesc">-</div>
+                        </div>
+                        <div class="trait-card">
+                            <div class="trait-label">Skin Tone</div>
+                            <div class="trait-value" id="resSkintoneName">-</div>
+                            <div class="trait-desc" id="resSkintoneDesc">-</div>
+                        </div>
+                        <div class="trait-card">
+                            <div class="trait-label">Contrast</div>
+                            <div class="trait-value" id="resContrastName">-</div>
+                            <div class="trait-desc" id="resContrastDesc">-</div>
+                        </div>
+                    </div>
+
+                    <div class="palettes-row">
+                        <div class="palette-card">
+                            <div class="card-header-accent best" style="margin-bottom: 20px;">
+                                <h2>Your Best Colors</h2>
+                                <p>Wear these to enhance your natural harmony</p>
+                            </div>
+                            <div id="bestColorsList" class="color-list"></div>
+                        </div>
+
+                        <div class="palette-card">
+                            <div class="card-header-accent avoid" style="margin-bottom: 20px;">
+                                <h2>Colors to Avoid</h2>
+                                <p>These might wash you out or clash with your undertone</p>
+                            </div>
+                            <div id="avoidColorsList" class="color-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <h2 style="font-family: var(--font-heading); color: var(--primary);">Analyzing Features...</h2>
+        <p style="color: var(--text-muted); margin-top: 8px;">Please wait while AI extracts your color traits</p>
+    </div>
+
+    <!-- Page Specific Script -->
+    <script src="/js/analyzer.js?v=1"></script>
+</body>
+
+</html>

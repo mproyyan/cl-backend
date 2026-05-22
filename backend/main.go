@@ -60,6 +60,9 @@ func main() {
 	app.Get("/outfits", func(c fiber.Ctx) error {
 		return c.SendFile("./public/outfits.html")
 	})
+	app.Get("/analyzer", func(c fiber.Ctx) error {
+		return c.SendFile("./public/analyzer.html")
+	})
 	app.Get("/outfits/create", func(c fiber.Ctx) error {
 		return c.SendFile("./public/create.html")
 	})

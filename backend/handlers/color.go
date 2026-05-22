@@ -7,6 +7,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+	"net/textproto"
 	"os"
 
 	"github.com/gofiber/fiber/v3"
@@ -46,7 +47,16 @@ func (h *Handler) AnalyzeColor(c fiber.Ctx) error {
 	var requestBody bytes.Buffer
 	writer := multipart.NewWriter(&requestBody)
 
-	part, err := writer.CreateFormFile("image", file.Filename)
+	header := make(textproto.MIMEHeader)
+	header.Set("Content-Disposition", fmt.Sprintf(`form-data; name="image"; filename="%s"`, file.Filename))
+	
+	contentType := file.Header.Get("Content-Type")
+	if contentType == "" {
+		contentType = "image/jpeg"
+	}
+	header.Set("Content-Type", contentType)
+
+	part, err := writer.CreatePart(header)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"error": "failed to create form file"})
 	}
