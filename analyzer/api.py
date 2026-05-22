@@ -3,6 +3,7 @@
 import os
 import sys
 import tempfile
+import requests
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,10 +42,22 @@ app.add_middleware(
 
 
 # =====================================================
-# Constants
+# Model config
 # =====================================================
 
-MODEL_PATH = "models/convnext_tiny_multi_output.pth"
+MODEL_URL = "https://outrecstorage.blob.core.windows.net/models/convnext_tiny_multi_output.pth"
+
+MODEL_DIR = os.path.join(BASE_DIR, "models")
+
+MODEL_PATH = os.path.join(
+    MODEL_DIR,
+    "convnext_tiny_multi_output.pth"
+)
+
+
+# =====================================================
+# AI config
+# =====================================================
 
 USE_WHITE_BALANCE = False
 USE_FACE_CROP = True
@@ -80,6 +93,52 @@ def save_uploaded_file(file: UploadFile):
 
 
 # =====================================================
+# Download model if not exists
+# =====================================================
+
+def ensure_model_exists():
+    if os.path.exists(MODEL_PATH):
+        print("Model already exists")
+        return
+
+    os.makedirs(MODEL_DIR, exist_ok=True)
+
+    print("Downloading model...")
+
+    response = requests.get(
+        MODEL_URL,
+        stream=True,
+        timeout=300
+    )
+
+    response.raise_for_status()
+
+    total_size = 0
+
+    with open(MODEL_PATH, "wb") as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                f.write(chunk)
+                total_size += len(chunk)
+
+    print(f"Model downloaded successfully ({total_size / 1024 / 1024:.2f} MB)")
+
+
+# =====================================================
+# Startup event
+# =====================================================
+
+@app.on_event("startup")
+async def startup_event():
+    try:
+        ensure_model_exists()
+
+    except Exception as e:
+        print(f"Failed to download model: {e}")
+        raise e
+
+
+# =====================================================
 # Routes
 # =====================================================
 
@@ -96,18 +155,22 @@ def root():
 def health():
     return {
         "service": "color-analysis-ai",
-        "status": "ok"
+        "status": "ok",
+        "model_exists": os.path.exists(MODEL_PATH)
     }
 
 
 @app.post("/api/v1/color-analysis")
 async def color_analysis(image: UploadFile = File(...)):
+
+    # Validate model
     if not os.path.exists(MODEL_PATH):
         raise HTTPException(
             status_code=500,
             detail=f"Model not found: {MODEL_PATH}"
         )
 
+    # Validate image type
     if image.content_type not in [
         "image/jpeg",
         "image/jpg",
@@ -122,8 +185,10 @@ async def color_analysis(image: UploadFile = File(...)):
     image_path = None
 
     try:
+        # Save temporary uploaded file
         image_path = save_uploaded_file(image)
 
+        # Run prediction
         result = predict_final(
             image_path=image_path,
             model_path=MODEL_PATH,
@@ -136,10 +201,21 @@ async def color_analysis(image: UploadFile = File(...)):
 
         final_output = result.get("final_output", {})
 
-        color_type = normalize_value(final_output.get("color_type", "-"))
-        undertone = normalize_value(final_output.get("undertone", "-"))
-        skin_tone = normalize_value(final_output.get("skin_tone", "-"))
-        contrast = normalize_value(final_output.get("contrast", "-"))
+        color_type = normalize_value(
+            final_output.get("color_type", "-")
+        )
+
+        undertone = normalize_value(
+            final_output.get("undertone", "-")
+        )
+
+        skin_tone = normalize_value(
+            final_output.get("skin_tone", "-")
+        )
+
+        contrast = normalize_value(
+            final_output.get("contrast", "-")
+        )
 
         return {
             "success": True,
@@ -160,8 +236,10 @@ async def color_analysis(image: UploadFile = File(...)):
         )
 
     finally:
+        # Remove temporary uploaded image
         if image_path is not None and os.path.exists(image_path):
             try:
                 os.remove(image_path)
+
             except Exception:
                 pass
