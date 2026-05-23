@@ -271,6 +271,11 @@ Scores and ranks outfits based on user preferences and filters out mismatched ge
 - **URL**: `/api/v1/recommend`
 - **Method**: `POST`
 - **Headers**: `Content-Type: application/json`
+- **Query Parameters**:
+  - `gender` (optional): `male` | `female` | `unisex` (overrides body gender)
+  - `style` (optional): `casual` | `smart_casual` | `formal` | `minimalist` | `streetwear`
+  - `minScore` (optional): Number representing minimum score threshold
+  - `limit` (optional): Integer to limit the number of returned results
 - **Request Body**:
   ```json
   {

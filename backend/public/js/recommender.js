@@ -433,13 +433,26 @@ recommendBtn.addEventListener("click", async () => {
     `;
 
     try {
-        const response = await fetch("/api/v1/recommend", {
+        const styleVal = document.getElementById("style") ? document.getElementById("style").value : "";
+        const minScoreVal = document.getElementById("minScore") ? document.getElementById("minScore").value : "";
+        const limitVal = document.getElementById("limit") ? document.getElementById("limit").value : "";
+        const genderVal = genderSelect.value;
+
+        const params = new URLSearchParams();
+        if (genderVal) params.append("gender", genderVal);
+        if (styleVal) params.append("style", styleVal);
+        if (minScoreVal) params.append("minScore", minScoreVal);
+        if (limitVal) params.append("limit", limitVal);
+
+        const url = "/api/v1/recommend" + (params.toString() ? "?" + params.toString() : "");
+
+        const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 best_colors: bestColors,
                 avoid_colors: avoidColors,
-                gender: genderSelect.value
+                gender: genderVal
             })
         });
 

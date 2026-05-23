@@ -81,17 +81,52 @@
                     </div>
                 </div>
 
-                <div class="gender-section card">
-                    <div class="section-title-row">
-                        <span class="sec-icon">👥</span>
-                        <label for="gender">Target Gender / Fit</label>
+                <div class="form-row">
+                    <div class="gender-section card" style="flex: 1;">
+                        <div class="section-title-row">
+                            <span class="sec-icon">👥</span>
+                            <label for="gender">Target Gender</label>
+                        </div>
+                        <select id="gender" class="custom-select">
+                            <option value="">All Genders</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="unisex">Unisex</option>
+                        </select>
                     </div>
-                    <select id="gender" class="custom-select">
-                        <option value="">All Genders</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="unisex">Unisex</option>
-                    </select>
+
+                    <div class="gender-section card" style="flex: 1;">
+                        <div class="section-title-row">
+                            <span class="sec-icon">👕</span>
+                            <label for="style">Style Tag</label>
+                        </div>
+                        <select id="style" class="custom-select">
+                            <option value="">All Styles</option>
+                            <option value="casual">Casual</option>
+                            <option value="smart_casual">Smart Casual</option>
+                            <option value="formal">Formal</option>
+                            <option value="minimalist">Minimalist</option>
+                            <option value="streetwear">Streetwear</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-bottom: 24px;">
+                    <div class="gender-section card" style="flex: 1;">
+                        <div class="section-title-row">
+                            <span class="sec-icon">⭐️</span>
+                            <label for="minScore">Min Score Threshold</label>
+                        </div>
+                        <input type="number" id="minScore" class="custom-select" placeholder="e.g. 50" min="0" max="100" style="padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 14px; background: white; width: 100%; box-sizing: border-box;" />
+                    </div>
+
+                    <div class="gender-section card" style="flex: 1;">
+                        <div class="section-title-row">
+                            <span class="sec-icon">🔢</span>
+                            <label for="limit">Maximum Results</label>
+                        </div>
+                        <input type="number" id="limit" class="custom-select" placeholder="e.g. 10" min="1" style="padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 14px; background: white; width: 100%; box-sizing: border-box;" />
+                    </div>
                 </div>
 
                 <button id="recommendBtn" class="primary-btn">
