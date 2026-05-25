@@ -266,6 +266,37 @@ Accepts a facial photo and returns a comprehensive personal color analysis, incl
   }
   ```
 
+### Pick Color
+Retrieves a complete color analysis response, including dynamically adjusted undertone, skintone, contrast, and recommended seasonal palettes, for a specific color type without requiring an image upload.
+- **URL**: `/api/v1/pick-color`
+- **Method**: `GET`
+- **Query Parameters**:
+  - `type` (required): The name of the season/color type (e.g., `Light Summer`, `Cool Winter`).
+- **Response**: `200 OK`
+  ```json
+  {
+    "color_type": "Light Summer",
+    "undertone": {
+      "explanation": "Undertone is the natural color...",
+      "value": { "name": "Cool", "explanation": "Your skin naturally carries..." }
+    },
+    "skintone": {
+      "explanation": "Skintone refers to...",
+      "value": { "name": "Light Skintone", "explanation": "Your skin appears fair..." }
+    },
+    "contrast": {
+      "explanation": "Contrast describes the level...",
+      "value": { "name": "Low Contrast", "explanation": "Your features blend together..." }
+    },
+    "best_colors": [
+      { "name": "soft cool blue-gray", "hex": "#B8CCD8" }
+    ],
+    "avoid_color": [
+      { "name": "warm burnt orange", "hex": "#D4622A" }
+    ]
+  }
+  ```
+
 ### Get Outfit Recommendations
 Scores and ranks outfits based on user preferences and filters out mismatched genders.
 - **URL**: `/api/v1/recommend`

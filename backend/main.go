@@ -82,6 +82,7 @@ func main() {
 	app.Post("/api/v1/recommend", h.Recommend)
 	app.Post("/api/v1/upload", h.UploadImage)
 	app.Post("/api/v1/analyze-color", h.AnalyzeColor)
+	app.Get("/api/v1/pick-color", h.PickColor)
 
 	port := os.Getenv("PORT")
 	if port == "" {

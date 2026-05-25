@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/textproto"
 	"os"
+	"strings"
 
 	"github.com/gofiber/fiber/v3"
 
@@ -122,6 +123,73 @@ func (h *Handler) AnalyzeColor(c fiber.Ctx) error {
 	}
 
 	palette := models.FindSeasonalPalette(extResponse.Data.ColorType)
+	analysis.BestColors = palette.BestColor
+	analysis.AvoidColor = palette.AvoidColor
+
+	return c.JSON(analysis)
+}
+
+func getDefaultsForSeason(season string) (string, string, string) {
+	season = strings.ToLower(season)
+	switch season {
+	case "clear spring":
+		return "Warm", "Light Skintone", "High Contrast"
+	case "warm spring":
+		return "Warm", "Medium Skintone", "High Contrast"
+	case "light spring":
+		return "Warm", "Light Skintone", "Low Contrast"
+	case "light summer":
+		return "Cool", "Light Skintone", "Low Contrast"
+	case "cool summer":
+		return "Cool", "Medium Skintone", "Low Contrast"
+	case "soft summer":
+		return "Cool", "Medium Skintone", "Low Contrast"
+	case "soft autumn":
+		return "Warm", "Medium Skintone", "Low Contrast"
+	case "warm autumn":
+		return "Warm", "Medium Skintone", "High Contrast"
+	case "deep autumn":
+		return "Warm", "Dark Skintone", "High Contrast"
+	case "clear winter":
+		return "Cool", "Medium Skintone", "High Contrast"
+	case "cool winter":
+		return "Cool", "Dark Skintone", "High Contrast"
+	case "deep winter":
+		return "Cool", "Dark Skintone", "High Contrast"
+	default:
+		return "Warm", "Medium Skintone", "Low Contrast"
+	}
+}
+
+func (h *Handler) PickColor(c fiber.Ctx) error {
+	colorType := c.Query("type")
+	if colorType == "" {
+		return c.Status(400).JSON(fiber.Map{"error": "type query parameter is required"})
+	}
+
+	palette := models.FindSeasonalPalette(colorType)
+	if palette.Name == "" {
+		return c.Status(400).JSON(fiber.Map{"error": "invalid color type"})
+	}
+
+	undertone, skintone, contrast := getDefaultsForSeason(palette.Name)
+
+	analysis := models.ColorAnalysisResponse{
+		ColorType: palette.Name,
+		Undertone: models.UndertoneRespone{
+			Explanation: models.UndertoneTemplates.Explanation,
+			Value:       models.FindUndertoneValue(undertone),
+		},
+		Skintone: models.SkintoneResponse{
+			Explanation: models.SkintoneTemplate.Explanation,
+			Value:       models.FindSkintoneValue(skintone),
+		},
+		Contrast: models.ContrastResponse{
+			Explanation: models.ContrastTemplate.Explanation,
+			Value:       models.FindContrastValue(contrast),
+		},
+	}
+
 	analysis.BestColors = palette.BestColor
 	analysis.AvoidColor = palette.AvoidColor
 
